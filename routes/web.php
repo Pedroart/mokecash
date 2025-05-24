@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', fn () => view('home'))->name('home');
+
+    // Aquí puedes añadir más rutas protegidas
+    Route::get('/perfil', fn () => view('perfil'))->name('perfil');
+
+    // Solo para admin
+    Route::get('/admin', fn () => view('admin'))->middleware('role:admin')->name('admin.dashboard');
 });
+
+Auth::routes();
+
