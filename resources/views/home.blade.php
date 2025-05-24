@@ -1,7 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container py-4">
+    <!-- Modal -->
+    <div class="modal fade" id="underConstructionModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white shadow">
+        <div class="modal-header border-0">
+            <h5 class="modal-title" id="modalTitle">🚧 Under Construction</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Esta sección se encuentra actualmente en construcción. Por favor vuelva a consultar más tarde.
+        </div>
+        <div class="modal-footer border-0">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
     <div class="row g-4">
 
         <div class="col-md-6 col-lg-4">
@@ -66,4 +85,14 @@
 
     </div>
 </div>
+
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const modal = new bootstrap.Modal(document.getElementById('underConstructionModal'));
+        modal.show();
+    });
+</script>
+@endpush

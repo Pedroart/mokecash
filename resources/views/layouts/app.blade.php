@@ -40,13 +40,7 @@
                 <!-- Menú de navegación -->
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Enlaces de navegación izquierda -->
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a href="#" class="nav-link text-secondary">Home</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link text-white">Features</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link text-white">Pricing</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link text-white">FAQs</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link text-white">About</a></li>
-                    </ul>
+                    <x-navbar-menu />
 
                     <!-- Autenticación -->
                     <ul class="navbar-nav mb-2 mb-lg-0">
@@ -90,5 +84,12 @@
             @yield('content')
         </main>
     </div>
+
+    <!-- Bootstrap JS (v5) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+    @stack('scripts')
 </body>
 </html>
