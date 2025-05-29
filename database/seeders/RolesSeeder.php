@@ -15,10 +15,17 @@ class RolesSeeder extends Seeder
      */
     public function run()
     {
-        Role::firstOrCreate(['name' => 'admin']);
-        Role::firstOrCreate(['name' => 'puntoventa']);
-        //Role::firstOrCreate(['name' => 'cliente']);
+        $roles = [
+            'admin',
+            'validador',
+            'finanzas',
+            'promotor',
+            'admin_tienda',
+            'vendedor',
+        ];
 
-        //Permission::firstOrCreate(['name' => 'ver dashboard']);
+        foreach ($roles as $rol) {
+            Role::firstOrCreate(['name' => $rol]);
+        }
     }
 }
