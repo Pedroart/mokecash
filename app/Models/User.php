@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'activo'
     ];
 
     /**
@@ -43,4 +44,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+        // Relaciones
+    public function tiendasVinculadas()
+    {
+        return $this->belongsToMany(Tienda::class, 'usuarios_tienda')
+            ->withPivot('rol_en_tienda')
+            ->withTimestamps();
+    }
+
+    public function tiendasCaptadas()
+    {
+        return $this->hasMany(Tienda::class, 'promotor_id');
+    }
+
+    public function tiendasAdministradas()
+    {
+        return $this->hasMany(Tienda::class, 'admin_tienda_id');
+    }
 }

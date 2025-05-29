@@ -15,6 +15,11 @@ class CreateUsuarioTiendasTable extends Migration
     {
         Schema::create('usuario_tiendas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('tienda_id')->constrained('tiendas')->onDelete('cascade');
+            $table->boolean('activo')->default(true);
+            $table->enum('rol_en_tienda', ['vendedor', 'admin']);
+
             $table->timestamps();
         });
     }
