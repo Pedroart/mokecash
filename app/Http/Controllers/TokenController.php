@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 
 class TokenController extends Controller
 {
