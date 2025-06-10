@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CotizacionController;
 use App\Http\Controllers\CalidaCredentialController;
 use App\Http\Controllers\CalidaTokenController;
+use App\Http\Controllers\BoletaController;
 
 
 /*
@@ -36,8 +37,16 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('personaltiendas', PersonaltiendaController::class);
     Route::resource('productos', ProductoController::class);
     Route::resource('cotizacions', CotizacionController::class);
+    Route::get('/cotizacion/{id}/avanzar-etapa', [CotizacionController::class, 'avanzar']);
+
     Route::resource('calida-credentials', CalidaCredentialController::class);
     Route::resource('calida-tokens', CalidaTokenController::class);
+    Route::resource('boletas', BoletaController::class);
+
+
+    Route::get('/consulta-financiamiento', function () {
+        return view('consulta-financiamiento.index');
+    });
 });
 
 Route::get('/clear-cache', function() {

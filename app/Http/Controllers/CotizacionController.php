@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Cotizacion;
 use App\Http\Requests\CotizacionRequest;
+use App\Traits\UserContextTrait;
+use Illuminate\Support\Facades\Auth;
+
 
 /**
  * Class CotizacionController
@@ -11,6 +14,9 @@ use App\Http\Requests\CotizacionRequest;
  */
 class CotizacionController extends Controller
 {
+
+    use UserContextTrait;
+
     /**
      * Display a listing of the resource.
      */
@@ -21,13 +27,29 @@ class CotizacionController extends Controller
         return view('cotizacion.index', compact('cotizacions'));
     }
 
+    public function avanzar($id)
+    {
+        $cotizacion = Cotizacion::with('etapaProceso')->findOrFail($id);
+
+        if ($cotizacion->avanzarEtapa()) {
+            return back()->with('success', 'Etapa actualizada con éxito.');
+        }
+
+        return back()->with('error', 'No se pudo avanzar de etapa.');
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $cotizacion = new Cotizacion();
-        return view('cotizacion.create', compact('cotizacion'));
+        //$cotizacion = new Cotizacion();
+
+        $vendor_id = Auth::user()->id;
+        $tienda_id = $this->getUserTienda()->id;
+
+        return view('consulta-financiamiento.index', compact('vendor_id','tienda_id'));
     }
 
     /**
@@ -35,7 +57,11 @@ class CotizacionController extends Controller
      */
     public function store(CotizacionRequest $request)
     {
-        Cotizacion::create($request->validated());
+        $cotizacion = Cotizacion::create($request->validated());
+        
+        $cotizacion->etapaProceso()->create([
+            'estado' => 'ingreso',
+        ]);
 
         return redirect()->route('cotizacions.index')
             ->with('success', 'Cotizacion created successfully.');
@@ -48,7 +74,7 @@ class CotizacionController extends Controller
     {
         $cotizacion = Cotizacion::find($id);
 
-        return view('cotizacion.show', compact('cotizacion'));
+        return view('consulta-financiamiento.show', compact('cotizacion'));
     }
 
     /**

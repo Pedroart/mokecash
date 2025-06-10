@@ -16,6 +16,18 @@ class ProductoController extends Controller
 
     use UserContextTrait;
 
+    public function productosPorTienda($tiendaId)
+    {
+        $productos = Producto::where('tienda_id', $tiendaId)->get();
+
+        return response()->json([
+            'success' => true,
+            'tienda_id' => $tiendaId,
+            'productos' => $productos,
+        ]);
+    }
+
+
     /**
      * Display a listing of the resource.
      */

@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', $cotizacion->name ?? __('Show') . ' Cotizacion')
+@section('title', $boletaitem->name ?? __('Show') . ' Boletaitem')
 
 @section('content_header')
-    <h1>{{ $cotizacion->name ?? __('Show') . ' Cotizacion' }}</h1>
+    <h1>{{ $boletaitem->name ?? __('Show') . ' Boletaitem' }}</h1>
 @endsection
 
 @section('content')
@@ -13,58 +13,58 @@
                 <div class="card">
                     <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Cotizacion</span>
+                            <span class="card-title">{{ __('Show') }} Boletaitem</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary btn-sm" href="{{ route('cotizacions.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary btn-sm" href="{{ route('boletaitems.index') }}"> {{ __('Back') }}</a>
                         </div>
                     </div>
 
                     <div class="card-body bg-white">
                         
                         <div class="form-group mb-2 mb20">
-                            <strong>Tienda Id:</strong>
-                            {{ $cotizacion->tienda_id }}
+                            <strong>Boleta Id:</strong>
+                            {{ $boletaitem->boleta_id }}
                         </div>
                         <div class="form-group mb-2 mb20">
-                            <strong>Vendedor Id:</strong>
-                            {{ $cotizacion->vendedor_id }}
+                            <strong>Sku:</strong>
+                            {{ $boletaitem->sku }}
                         </div>
                         <div class="form-group mb-2 mb20">
-                            <strong>Producto Id:</strong>
-                            {{ $cotizacion->producto_id }}
+                            <strong>Descripcion:</strong>
+                            {{ $boletaitem->descripcion }}
                         </div>
                         <div class="form-group mb-2 mb20">
-                            <strong>Dni Cliente:</strong>
-                            {{ $cotizacion->dni_cliente }}
+                            <strong>Unidad De Medida:</strong>
+                            {{ $boletaitem->unidad_de_medida }}
                         </div>
                         <div class="form-group mb-2 mb20">
-                            <strong>Nombre Cliente:</strong>
-                            {{ $cotizacion->nombre_cliente }}
+                            <strong>Cantidad:</strong>
+                            {{ $boletaitem->cantidad }}
                         </div>
                         <div class="form-group mb-2 mb20">
-                            <strong>Direccion:</strong>
-                            {{ $cotizacion->direccion }}
+                            <strong>Valor Unitario:</strong>
+                            {{ $boletaitem->valor_unitario }}
                         </div>
                         <div class="form-group mb-2 mb20">
-                            <strong>Cuotas:</strong>
-                            {{ $cotizacion->cuotas }}
+                            <strong>Precio Unitario Con Igv:</strong>
+                            {{ $boletaitem->precio_unitario_con_igv }}
                         </div>
                         <div class="form-group mb-2 mb20">
-                            <strong>Monto:</strong>
-                            {{ $cotizacion->monto }}
+                            <strong>Codigo Tipo Afectacion Igv:</strong>
+                            {{ $boletaitem->codigo_tipo_afectacion_igv }}
                         </div>
                         <div class="form-group mb-2 mb20">
-                            <strong>Monto Financiado:</strong>
-                            {{ $cotizacion->monto_financiado }}
+                            <strong>Porcentaje Igv:</strong>
+                            {{ $boletaitem->porcentaje_igv }}
                         </div>
                         <div class="form-group mb-2 mb20">
-                            <strong>Estatus:</strong>
-                            {{ $cotizacion->estatus }}
+                            <strong>Descuento Item:</strong>
+                            {{ $boletaitem->descuento_item }}
                         </div>
                         <div class="form-group mb-2 mb20">
-                            <strong>Ip Origen:</strong>
-                            {{ $cotizacion->ip_origen }}
+                            <strong>Total Item:</strong>
+                            {{ $boletaitem->total_item }}
                         </div>
 
                     </div>

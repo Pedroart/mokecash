@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Cotizacion')
+@section('title', 'Boletaitem')
 
 @section('content_header')
-    <h1>Cotizacion</h1>
+    <h1>Boletaitem</h1>
 @endsection
 
 
@@ -16,11 +16,11 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Cotizacion') }}
+                                {{ __('Boletaitem') }}
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('cotizacions.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('boletaitems.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
                                   {{ __('Create New') }}
                                 </a>
                               </div>
@@ -39,42 +39,42 @@
                                     <tr>
                                         <th>No</th>
                                         
-										<th>Tienda Id</th>
-										<th>Vendedor Id</th>
-										<th>Producto Id</th>
-										<th>Dni Cliente</th>
-										<th>Nombre Cliente</th>
-										<th>Direccion</th>
-										<th>Cuotas</th>
-										<th>Monto</th>
-										<th>Monto Financiado</th>
-										<th>Estatus</th>
-										<th>Ip Origen</th>
+										<th>Boleta Id</th>
+										<th>Sku</th>
+										<th>Descripcion</th>
+										<th>Unidad De Medida</th>
+										<th>Cantidad</th>
+										<th>Valor Unitario</th>
+										<th>Precio Unitario Con Igv</th>
+										<th>Codigo Tipo Afectacion Igv</th>
+										<th>Porcentaje Igv</th>
+										<th>Descuento Item</th>
+										<th>Total Item</th>
 
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($cotizacions as $cotizacion)
+                                    @foreach ($boletaitems as $boletaitem)
                                         <tr>
-                                            <td>{{ $cotizacion->id }}</td>
+                                            <td>{{ $boletaitem->id }}</td>
                                             
-											<td>{{ $cotizacion->tienda_id }}</td>
-											<td>{{ $cotizacion->vendedor_id }}</td>
-											<td>{{ $cotizacion->producto_id }}</td>
-											<td>{{ $cotizacion->dni_cliente }}</td>
-											<td>{{ $cotizacion->nombre_cliente }}</td>
-											<td>{{ $cotizacion->direccion }}</td>
-											<td>{{ $cotizacion->cuotas }}</td>
-											<td>{{ $cotizacion->monto }}</td>
-											<td>{{ $cotizacion->monto_financiado }}</td>
-											<td>{{ $cotizacion->estatus }}</td>
-											<td>{{ $cotizacion->ip_origen }}</td>
+											<td>{{ $boletaitem->boleta_id }}</td>
+											<td>{{ $boletaitem->sku }}</td>
+											<td>{{ $boletaitem->descripcion }}</td>
+											<td>{{ $boletaitem->unidad_de_medida }}</td>
+											<td>{{ $boletaitem->cantidad }}</td>
+											<td>{{ $boletaitem->valor_unitario }}</td>
+											<td>{{ $boletaitem->precio_unitario_con_igv }}</td>
+											<td>{{ $boletaitem->codigo_tipo_afectacion_igv }}</td>
+											<td>{{ $boletaitem->porcentaje_igv }}</td>
+											<td>{{ $boletaitem->descuento_item }}</td>
+											<td>{{ $boletaitem->total_item }}</td>
 
                                             <td>
-                                                <form action="{{ route('cotizacions.destroy',$cotizacion->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('cotizacions.show',$cotizacion->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('cotizacions.edit',$cotizacion->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                <form action="{{ route('boletaitems.destroy',$boletaitem->id) }}" method="POST">
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('boletaitems.show',$boletaitem->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('boletaitems.edit',$boletaitem->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>

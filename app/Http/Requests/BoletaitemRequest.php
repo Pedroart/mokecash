@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CotizacionRequest extends FormRequest
+class BoletaitemRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,17 +22,16 @@ class CotizacionRequest extends FormRequest
     public function rules(): array
     {
         return [
-			'tienda_id' => 'required',
-			'vendedor_id' => 'required',
-			'producto_id' => 'required',
-			'dni_cliente' => 'required|string',
-			'nombre_cliente' => 'required|string',
-			'direccion' => 'required|string',
-			'cuotas' => 'required',
-			'monto' => 'required',
-			'monto_financiado' => 'required',
-			'estatus' => 'required',
-			'ip_origen' => 'string',
+			'boleta_id' => 'required',
+			'sku' => 'string',
+			'descripcion' => 'required|string',
+			'unidad_de_medida' => 'string',
+			'cantidad' => 'required',
+			'valor_unitario' => 'required',
+			'codigo_tipo_afectacion_igv' => 'required|string',
+			'porcentaje_igv' => 'required',
+			'descuento_item' => 'required',
+			'total_item' => 'required',
         ];
     }
 }

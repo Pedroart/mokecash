@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CalidaLineaCreditoController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\CotizacionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,6 +17,8 @@ use App\Http\Controllers\CalidaLineaCreditoController;
 */
 
 Route::get('/calidda/linea-credito', [CalidaLineaCreditoController::class, 'consultarLineaCredito']);
+Route::get('/tiendas/{tiendaId}/productos', [ProductoController::class, 'productosPorTienda']);
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

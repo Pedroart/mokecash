@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             Users::class,
             TiendaTest::class,
             CalidaCredentialSeeder::class,
+            BoletaSeeder::class,
         ]);
     }
 }

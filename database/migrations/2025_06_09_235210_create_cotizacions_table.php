@@ -17,12 +17,15 @@ return new class extends Migration
             $table->foreignId('vendedor_id')->constrained('users');
             $table->foreignId('producto_id')->constrained();
 
+            $table->string('dni_cliente');
+            $table->string('nombre_cliente');
+            $table->string('direccion');
+
             $table->unsignedInteger('cuotas');
             $table->decimal('monto', 10, 2);
+            $table->decimal('monto_financiado', 10, 2);
 
-            $table->string('dni_cliente');
-            
-
+            $table->enum('estatus', ['activo', 'finalizado', 'observado', 'anulado'])->default('activo');
             $table->ipAddress('ip_origen')->nullable();
             $table->timestamps();
         });
