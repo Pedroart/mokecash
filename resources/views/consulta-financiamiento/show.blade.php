@@ -119,19 +119,30 @@ function guardarDato(clave, valor) {
             valor: valor
         })
     })
-    .then(res => res.json())
+    .then(async res => {
+        if (!res.ok) {
+            const errorText = await res.text();
+            console.error('❌ Error HTTP:', res.status, errorText);
+            alert('Error al guardar (HTTP)');
+            return;
+        }
+
+        return res.json();
+    })
     .then(data => {
-        if (data.success) {
+        if (data?.success) {
             alert('Dato guardado correctamente');
             location.reload();
         } else {
+            console.error('⚠️ Respuesta inesperada:', data);
             alert('Error al guardar');
         }
     })
     .catch(err => {
-        console.error(err);
+        console.error('❌ Error de red o JS:', err);
         alert('Error de conexión');
     });
+
 }
 </script>
 @endpush
