@@ -186,7 +186,8 @@ function consultarCliente() {
     document.getElementById('loader').style.display = 'block';
     document.getElementById('simulador-container').style.display = 'none';
 
-    const url = `http://localhost:8000/api/calidda/linea-credito?numeroDocumento=${dni}&tipoDocumento=PE2`;
+    const baseUrl = "{{ url('/api/calidda/linea-credito') }}";
+    const url = `${baseUrl}?numeroDocumento=${dni}&tipoDocumento=PE2`;
 
     fetch(url)
         .then(response => response.json())
