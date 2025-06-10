@@ -297,7 +297,7 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Menu-Configuration
     |
     */
-
+    /*
     'menu' => [
         // Navbar items:
         [
@@ -393,6 +393,67 @@ return [
             'url' => '#',
         ],
     ],
+    */
+
+    'menu' => [
+        ['header' => 'GESTIÓN'],
+
+        [
+            'text' => 'Usuarios',
+            'url'  => 'users',
+            'icon' => 'fas fa-fw fa-users',
+            'can'  => 'users.index',
+        ],
+        [
+            'text' => 'Tiendas',
+            'url'  => 'tiendas',
+            'icon' => 'fas fa-fw fa-store',
+            'can'  => 'tiendas.index',
+        ],
+        [
+            'text' => 'Personal Tiendas',
+            'url'  => 'personaltiendas',
+            'icon' => 'fas fa-fw fa-user-friends',
+            'can'  => 'personaltiendas.index',
+        ],
+        [
+            'text' => 'Productos',
+            'url'  => 'productos',
+            'icon' => 'fas fa-fw fa-box',
+            'can'  => 'productos.index',
+        ],
+        [
+            'text' => 'Cotizaciones',
+            'url'  => 'cotizacions',
+            'icon' => 'fas fa-fw fa-file-invoice-dollar',
+            'can'  => 'cotizacions.index',
+        ],
+        [
+            'text' => 'Calida Credentials',
+            'url'  => 'calida-credentials',
+            'icon' => 'fas fa-fw fa-key',
+            'can'  => 'calida-credentials.index',
+        ],
+        [
+            'text' => 'Calida Tokens',
+            'url'  => 'calida-tokens',
+            'icon' => 'fas fa-fw fa-shield-alt',
+            'can'  => 'calida-tokens.index',
+        ],
+
+        ['header' => 'CUENTA'],
+        [
+            'text' => 'Perfil',
+            'url'  => 'admin/settings',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text' => 'Cambiar contraseña',
+            'url'  => 'admin/settings',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
+    ],
+
 
     /*
     |--------------------------------------------------------------------------
