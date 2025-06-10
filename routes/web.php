@@ -23,7 +23,7 @@ use App\Http\Controllers\CalidaTokenController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/home');
 });
 
 Auth::routes();
@@ -38,4 +38,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('cotizacions', CotizacionController::class);
     Route::resource('calida-credentials', CalidaCredentialController::class);
     Route::resource('calida-tokens', CalidaTokenController::class);
+});
+
+Route::fallback(function () {
+    return redirect('/home');
 });
