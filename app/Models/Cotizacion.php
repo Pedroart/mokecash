@@ -71,19 +71,19 @@ class Cotizacion extends Model
 
     public function correoElectronico(): ?string
     {
-        return $this->items->firstWhere('clave', 'Correo Electronico')?->valor;
+        return $this->items->firstWhere('clave', 'correo')?->valor;
     }
 
 
     public function telefono(): ?string
     {
-        return $this->items->firstWhere('clave', 'Telefono de contacto')?->valor;
+        return $this->items->firstWhere('clave', 'telefono')?->valor;
     }
 
 
     public function imei(): ?string
     {
-        return $this->items->firstWhere('clave', 'IMEI')?->valor;
+        return $this->items->firstWhere('clave', 'imei')?->valor;
     }
 
     public function etapaProceso()

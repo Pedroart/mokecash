@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CalidaLineaCreditoController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CotizacionController;
+use App\Http\Controllers\ArchivadorProcesoController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,6 +19,7 @@ use App\Http\Controllers\CotizacionController;
 
 Route::get('/calidda/linea-credito', [CalidaLineaCreditoController::class, 'consultarLineaCredito']);
 Route::get('/tiendas/{tiendaId}/productos', [ProductoController::class, 'productosPorTienda']);
+Route::post('/archivador-procesos', [ArchivadorProcesoController::class, 'store2']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

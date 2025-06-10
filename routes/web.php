@@ -10,6 +10,7 @@ use App\Http\Controllers\CotizacionController;
 use App\Http\Controllers\CalidaCredentialController;
 use App\Http\Controllers\CalidaTokenController;
 use App\Http\Controllers\BoletaController;
+use App\Http\Controllers\ArchivadorProcesoController;
 
 
 /*
@@ -42,6 +43,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('calida-credentials', CalidaCredentialController::class);
     Route::resource('calida-tokens', CalidaTokenController::class);
     Route::resource('boletas', BoletaController::class);
+
+    Route::resource('archivador-procesos', ArchivadorProcesoController::class);
 
 
     Route::get('/consulta-financiamiento', function () {

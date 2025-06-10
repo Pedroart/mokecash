@@ -41,6 +41,13 @@ class ArchivadorProcesoController extends Controller
             ->with('success', 'ArchivadorProceso created successfully.');
     }
 
+    public function store2(ArchivadorProcesoRequest $request)
+    {
+        $registro = ArchivadorProceso::create($request->validated());
+
+        return response()->json(['success' => true, 'data' => $registro]);
+    }
+
     /**
      * Display the specified resource.
      */
