@@ -10,5 +10,7 @@
         <label for="pago-codigo">Código de Operación / ID de Transacción</label>
         <input type="text" class="form-control text-center" id="pago-codigo" placeholder="Ingrese el código de la transacción">
     </div>
+    @if($vista_accion)
     <button class="btn btn-success btn-lg mt-3"><i class="fas fa-flag-checkered"></i> Finalizar y Registrar Pago</button>
+    @endif
 </div>

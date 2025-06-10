@@ -86,4 +86,6 @@
     </div>
 </div>
 
+@if($vista_accion)
 <button id="btn-goto-etapa2" class="btn btn-primary mt-3 float-right">Continuar a Validación Biométrica</button>
+@endif

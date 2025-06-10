@@ -73,8 +73,12 @@ class CotizacionController extends Controller
     public function show($id)
     {
         $cotizacion = Cotizacion::find($id);
+        
+        $role = $this->getUserRole();
+        $rolesPermitidos = ['admin', 'validador', 'finanzas', 'promotor'];
+        $vista_accion = in_array($role, $rolesPermitidos);
 
-        return view('consulta-financiamiento.show', compact('cotizacion'));
+        return view('consulta-financiamiento.show', compact('cotizacion','vista_accion'));
     }
 
     /**

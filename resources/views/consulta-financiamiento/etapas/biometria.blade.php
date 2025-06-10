@@ -9,5 +9,7 @@
 </div>
 <div class="d-flex justify-content-between mt-4">
     <button class="btn btn-outline-secondary" onclick="window.print()"><i class="fas fa-print"></i> Imprimir Borrador</button>
+    @if($vista_accion)
     <button type="button" id="btn-goto-etapa3" class="btn btn-primary">Confirmar Validación y Continuar</button>
+    @endif
 </div>
