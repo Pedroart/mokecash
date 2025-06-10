@@ -15,3 +15,5 @@ composer install --optimize-autoloader --no-dev
 npm run build # (si usas Vite)
 rm -rf node_modules
 rm -rf tests
+
+php artisan storage:link
