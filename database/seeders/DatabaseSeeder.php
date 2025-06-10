@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
             Users::class,
             TiendaTest::class,
+            CalidaCredentialSeeder::class,
         ]);
     }
 }
