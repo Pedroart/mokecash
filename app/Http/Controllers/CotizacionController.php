@@ -22,8 +22,16 @@ class CotizacionController extends Controller
      */
     public function index()
     {
-        $cotizacions = Cotizacion::all();
+        $role = $this->getUserRole();
+        
+        $rolesPermitidos = ['admin', 'validador', 'finanzas', 'promotor'];
 
+        if (in_array($role, $rolesPermitidos)) {
+            $cotizacions = Cotizacion::all();
+        } else {
+            $tienda = $this->getUserTienda()->id;
+            $cotizacions = Cotizacion::where('tienda_id',$tienda)->get();
+        }
         return view('cotizacion.index', compact('cotizacions'));
     }
 

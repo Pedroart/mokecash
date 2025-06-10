@@ -10,6 +10,7 @@
 </div>
 <div class="text-right mt-3">
     @if($vista_accion)
-    <button type="button" id="btn-goto-etapa5" class="btn btn-primary">Subir Boleta y Continuar a Pago</button>
+    <button type="button" id="btn-goto-etapa5" class="btn btn-primary"
+    onclick="avanzarEtapa({{ $cotizacion->id }})">Subir Boleta y Continuar a Pago</button>
     @endif
 </div>

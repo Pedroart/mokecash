@@ -3,8 +3,8 @@
     $etapas = [
         ['id' => 'etapa1', 'nombre' => 'Ingreso de Datos', 'clave' => 'ingreso'],
         ['id' => 'etapa2', 'nombre' => 'Validación Biométrica', 'clave' => 'biometria'],
-        ['id' => 'etapa3', 'nombre' => 'Evidencias', 'clave' => 'evidencia'],
-        ['id' => 'etapa4', 'nombre' => 'Subida a MOKE', 'clave' => 'moke'],
+        ['id' => 'etapa3', 'nombre' => 'Evidencias', 'clave' => 'validacion'],
+        ['id' => 'etapa4', 'nombre' => 'Subida a MOKE', 'clave' => 'boleta'],
         ['id' => 'etapa5', 'nombre' => 'Pago', 'clave' => 'pago'],
     ];
     $indiceEtapaActual = collect($etapas)->pluck('clave')->search($etapaActual);
@@ -19,6 +19,9 @@
 @stop
 
 @section('content')
+
+{{$cotizacion->etapaActual() }}
+
 <div class="card">
     <div class="card-header p-0">
         {{-- Tabs dinámicas --}}
@@ -53,11 +56,11 @@
                 @include('consulta-financiamiento.etapas.biometria')
             </div>
 
-            <div class="tab-pane fade {{ $etapaActual === 'evidencia' ? 'show active' : '' }}" id="etapa3" role="tabpanel" aria-labelledby="etapa3-tab">
+            <div class="tab-pane fade {{ $etapaActual === 'validacion' ? 'show active' : '' }}" id="etapa3" role="tabpanel" aria-labelledby="etapa3-tab">
                 @include('consulta-financiamiento.etapas.evidencia')
             </div>
 
-            <div class="tab-pane fade {{ $etapaActual === 'moke' ? 'show active' : '' }}" id="etapa4" role="tabpanel" aria-labelledby="etapa4-tab">
+            <div class="tab-pane fade {{ $etapaActual === 'boleta' ? 'show active' : '' }}" id="etapa4" role="tabpanel" aria-labelledby="etapa4-tab">
                 @include('consulta-financiamiento.etapas.moke')
             </div>
 
@@ -72,34 +75,11 @@
 
 @push('js')
 <script>
-$(document).ready(function () {
-    bsCustomFileInput.init();
 
-    const tabs = {
-        etapa1: $('#etapa1-tab'),
-        etapa2: $('#etapa2-tab'),
-        etapa3: $('#etapa3-tab'),
-        etapa4: $('#etapa4-tab'),
-        etapa5: $('#etapa5-tab'),
-    };
-
-    const continueButtons = {
-        toEtapa2: $('#btn-goto-etapa2'),
-        toEtapa3: $('#btn-goto-etapa3'),
-        toEtapa4: $('#btn-goto-etapa4'),
-        toEtapa5: $('#btn-goto-etapa5'),
-    };
-
-    function goToNextStep(completedTab, nextTab) {
-        completedTab.removeClass('active').addClass('disabled');
-        nextTab.removeClass('disabled').tab('show');
-    }
-
-    continueButtons.toEtapa2?.on('click', () => goToNextStep(tabs.etapa1, tabs.etapa2));
-    continueButtons.toEtapa3?.on('click', () => goToNextStep(tabs.etapa2, tabs.etapa3));
-    continueButtons.toEtapa4?.on('click', () => goToNextStep(tabs.etapa3, tabs.etapa4));
-    continueButtons.toEtapa5?.on('click', () => goToNextStep(tabs.etapa4, tabs.etapa5));
-});
+function avanzarEtapa(id) {
+    const url = `/cotizacion/${id}/avanzar-etapa`; // O usa la ruta nombrada con Blade
+    window.location.href = url;
+}
 
 function guardarDato(clave, valor) {
     if (!valor.trim()) {

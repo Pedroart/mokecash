@@ -34,13 +34,14 @@ class ProductoController extends Controller
     public function index()
     {
         $role = $this->getUserRole();
-        $tienda = $this->getUserTienda()->id;
+        
 
         $rolesPermitidos = ['admin', 'validador', 'finanzas', 'promotor'];
 
         if (in_array($role, $rolesPermitidos)) {
             $productos = Producto::all();
         } else {
+            $tienda = $this->getUserTienda()->id;
             $productos = Producto::where('tienda_id',$tienda)->get();
         }
 

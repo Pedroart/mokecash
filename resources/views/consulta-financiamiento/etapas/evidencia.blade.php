@@ -32,6 +32,6 @@
 </div>
 <div class="text-right mt-4">
     @if($vista_accion)
-    <button type="button" id="btn-goto-etapa4" class="btn btn-primary">Subir Evidencias y Continuar</button>
+    <button type="button" id="btn-goto-etapa4" class="btn btn-primary" onclick="avanzarEtapa({{ $cotizacion->id }})" >Subir Evidencias y Continuar</button>
     @endif
 </div>
