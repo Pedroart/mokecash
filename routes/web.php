@@ -40,6 +40,16 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('calida-tokens', CalidaTokenController::class);
 });
 
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');          // caché de la app
+    Artisan::call('config:clear');         // caché de configuración
+    Artisan::call('route:clear');          // caché de rutas
+    Artisan::call('view:clear');           // caché de vistas
+    Artisan::call('optimize:clear');       // limpio completo
+    return 'Todas las caches han sido limpiadas';
+});
+
 Route::fallback(function () {
     return redirect('/home');
 });
+
