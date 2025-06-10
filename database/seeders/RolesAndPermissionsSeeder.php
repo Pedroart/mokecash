@@ -29,8 +29,54 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // Mapa de permisos → roles
         $permisos = [
-            'crear_cotizacion' => ['admin', 'validador', 'finanzas', 'promotor', 'admin_tienda', 'vendedor'],
-            'ver_cotizaciones' => ['admin', 'validador', 'finanzas', 'promotor', 'admin_tienda', 'vendedor'],
+            // USERS
+            'users.index'   => ['admin'],
+            'users.create'  => ['admin'],
+            'users.edit'    => ['admin'],
+            'users.destroy' => ['admin'],
+            'users.show'    => ['admin'],
+
+            // TIENDAS
+            'tiendas.index'   => ['admin', 'admin_tienda'],
+            'tiendas.create'  => ['admin'],
+            'tiendas.edit'    => ['admin'],
+            'tiendas.destroy' => ['admin'],
+            'tiendas.show'    => ['admin', 'admin_tienda'],
+
+            // PERSONALTIENDAS
+            'personaltiendas.index'   => ['admin', 'admin_tienda'],
+            'personaltiendas.create'  => ['admin'],
+            'personaltiendas.edit'    => ['admin'],
+            'personaltiendas.destroy' => ['admin'],
+            'personaltiendas.show'    => ['admin', 'admin_tienda'],
+
+            // PRODUCTOS
+            'productos.index'   => ['admin', 'admin_tienda', 'vendedor'],
+            'productos.create'  => ['admin', 'admin_tienda'],
+            'productos.edit'    => ['admin', 'admin_tienda'],
+            'productos.destroy' => ['admin'],
+            'productos.show'    => ['admin', 'admin_tienda', 'vendedor'],
+
+            // COTIZACIONES
+            'cotizacions.index'   => ['admin', 'validador', 'finanzas', 'promotor', 'admin_tienda', 'vendedor'],
+            'cotizacions.create'  => ['admin', 'validador', 'finanzas', 'promotor', 'admin_tienda', 'vendedor'],
+            'cotizacions.edit'    => ['admin', 'validador'],
+            'cotizacions.destroy' => ['admin'],
+            'cotizacions.show'    => ['admin', 'validador', 'finanzas', 'promotor', 'admin_tienda', 'vendedor'],
+
+            // CALIDA CREDENTIALS
+            'calida-credentials.index'   => ['admin'],
+            'calida-credentials.create'  => ['admin'],
+            'calida-credentials.edit'    => ['admin'],
+            'calida-credentials.destroy' => ['admin'],
+            'calida-credentials.show'    => ['admin'],
+
+            // CALIDA TOKENS
+            'calida-tokens.index'   => ['admin'],
+            'calida-tokens.create'  => ['admin'],
+            'calida-tokens.edit'    => ['admin'],
+            'calida-tokens.destroy' => ['admin'],
+            'calida-tokens.show'    => ['admin'],
         ];
 
         foreach ($permisos as $permiso => $roles) {
