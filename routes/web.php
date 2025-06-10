@@ -1,6 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\TiendaController;
+use App\Http\Controllers\PersonaltiendaController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\CotizacionController;
+use App\Http\Controllers\CalidaCredentialController;
+use App\Http\Controllers\CalidaTokenController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -8,19 +16,25 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
 |
 */
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/', fn () => view('home'))->name('home');
-
-    Route::get('/simulador', fn () => view('simulador.simulador'))->name('simulador');
-
-    // Solo para admin
-    Route::get('/admin', fn () => view('admin'))->middleware('role:admin')->name('admin.dashboard');
+Route::get('/', function () {
+    return view('welcome');
 });
 
 Auth::routes();
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+    Route::resource('users', UserController::class);
+    Route::resource('tiendas', TiendaController::class);
+    Route::resource('personaltiendas', PersonaltiendaController::class);
+    Route::resource('productos', ProductoController::class);
+    Route::resource('cotizacions', CotizacionController::class);
+    Route::resource('calida-credentials', CalidaCredentialController::class);
+    Route::resource('calida-tokens', CalidaTokenController::class);
+});

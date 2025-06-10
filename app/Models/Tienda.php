@@ -2,35 +2,40 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Tienda
+ *
+ * @property $id
+ * @property $nombre
+ * @property $direccion
+ * @property $telefono
+ * @property $created_at
+ * @property $updated_at
+ *
+ * @package App
+ * @mixin \Illuminate\Database\Eloquent\Builder
+ */
 class Tienda extends Model
 {
-    use HasFactory;
+    
 
-    protected $fillable = [
-        'nombre', 'activo', 'tasa_interes', 'promotor_id', 'admin_tienda_id'
-    ];
+    /**
+     * Attributes that should be mass-assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['nombre', 'direccion', 'telefono'];
 
-    protected $casts = [
-        'activo' => 'boolean',
-    ];
-
-    public function promotor()
+    public function personal()
     {
-        return $this->belongsTo(User::class, 'promotor_id');
+        return $this->hasMany(PersonalTienda::class);
     }
 
-    public function admin()
+    public function productos()
     {
-        return $this->belongsTo(User::class, 'admin_tienda_id');
+        return $this->hasMany(Producto::class);
     }
 
-    public function usuarios()
-    {
-        return $this->belongsToMany(User::class, 'usuarios_tienda')
-            ->withPivot('rol_en_tienda')
-            ->withTimestamps();
-    }
 }

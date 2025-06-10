@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -23,7 +23,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'activo'
     ];
 
     /**
@@ -43,23 +42,12 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
 
-        // Relaciones
-    public function tiendasVinculadas()
+    public function tiendasAsignadas()
     {
-        return $this->belongsToMany(Tienda::class, 'usuarios_tienda')
-            ->withPivot('rol_en_tienda')
-            ->withTimestamps();
+        return $this->hasMany(PersonalTienda::class);
     }
 
-    public function tiendasCaptadas()
-    {
-        return $this->hasMany(Tienda::class, 'promotor_id');
-    }
-
-    public function tiendasAdministradas()
-    {
-        return $this->hasMany(Tienda::class, 'admin_tienda_id');
-    }
 }

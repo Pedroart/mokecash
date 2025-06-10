@@ -1,0 +1,10 @@
+> Refresh DB SEED
+
+php artisan migrate:fresh --seed
+
+> Modificar el CRUD
+
+config/crud.php
+
+
+php artisan make:crud banks
