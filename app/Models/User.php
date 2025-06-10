@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-
+use App\Models\Personaltienda;
 
 class User extends Authenticatable
 {
@@ -47,7 +47,7 @@ class User extends Authenticatable
 
     public function tiendasAsignadas()
     {
-        return $this->hasMany(PersonalTienda::class);
+        return $this->hasMany(Personaltienda::class);
     }
 
 }

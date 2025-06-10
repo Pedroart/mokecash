@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use App\Http\Requests\ProductoRequest;
+use App\Traits\UserContextTrait;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class ProductoController
@@ -11,12 +13,24 @@ use App\Http\Requests\ProductoRequest;
  */
 class ProductoController extends Controller
 {
+
+    use UserContextTrait;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $productos = Producto::all();
+        $role = $this->getUserRole();
+        $tienda = $this->getUserTienda()->id;
+
+        $rolesPermitidos = ['admin', 'validador', 'finanzas', 'promotor'];
+
+        if (in_array($role, $rolesPermitidos)) {
+            $productos = Producto::all();
+        } else {
+            $productos = Producto::where('tienda_id',$tienda)->get();
+        }
 
         return view('producto.index', compact('productos'));
     }
@@ -27,9 +41,18 @@ class ProductoController extends Controller
     public function create()
     {
         $producto = new Producto();
-        return view('producto.create', compact('producto'));
-    }
+        $role = $this->getUserRole();
+        $rolesPermitidos = ['admin', 'validador', 'finanzas', 'promotor'];
 
+        if (in_array($role, $rolesPermitidos)) {
+            $tiendas = Tienda::all();
+        } else {
+            $tienda = $this->getUserTienda();
+            $tiendas = $tienda ? collect([$tienda]) : collect(); // en caso no tenga tienda
+        }
+
+        return view('producto.create', compact('producto', 'tiendas'));
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -47,8 +70,18 @@ class ProductoController extends Controller
     public function show($id)
     {
         $producto = Producto::find($id);
+        $role = $this->getUserRole();
+        $rolesPermitidos = ['admin', 'validador', 'finanzas', 'promotor'];
 
-        return view('producto.show', compact('producto'));
+        if (in_array($role, $rolesPermitidos)) {
+            $tiendas = Tienda::all();
+        } else {
+            $tienda = $this->getUserTienda();
+            $tiendas = $tienda ? collect([$tienda]) : collect(); // en caso no tenga tienda
+        }
+
+
+        return view('producto.show', compact('producto','tiendas'));
     }
 
     /**
@@ -57,8 +90,17 @@ class ProductoController extends Controller
     public function edit($id)
     {
         $producto = Producto::find($id);
+                $role = $this->getUserRole();
+        $rolesPermitidos = ['admin', 'validador', 'finanzas', 'promotor'];
 
-        return view('producto.edit', compact('producto'));
+        if (in_array($role, $rolesPermitidos)) {
+            $tiendas = Tienda::all();
+        } else {
+            $tienda = $this->getUserTienda();
+            $tiendas = $tienda ? collect([$tienda]) : collect(); // en caso no tenga tienda
+        }
+
+        return view('producto.edit', compact('producto','tiendas'));
     }
 
     /**

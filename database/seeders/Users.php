@@ -21,5 +21,28 @@ class Users extends Seeder
         );
 
         $user->assignRole('admin');
+
+        // DataDummy
+
+        $roles = [
+            'admin',
+            'validador',
+            'finanzas',
+            'promotor',
+            'admin_tienda',
+            'vendedor',
+        ];
+
+        foreach ($roles as $rol) {
+            $user = User::firstOrCreate(
+                ['email' => "$rol@testienda.com"],
+                [
+                    'name' => ucfirst($rol) . 'Tiendas',
+                    'password' => Hash::make('moke*'),
+                ]
+            );
+
+            $user->assignRole($rol);
+        }
     }
 }

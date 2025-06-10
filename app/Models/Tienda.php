@@ -30,7 +30,7 @@ class Tienda extends Model
 
     public function personal()
     {
-        return $this->hasMany(PersonalTienda::class);
+        return $this->hasMany(Personaltienda::class);
     }
 
     public function productos()
