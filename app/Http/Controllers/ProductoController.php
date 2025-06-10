@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Producto;
+use App\Models\Tienda;
 use App\Http\Requests\ProductoRequest;
 use App\Traits\UserContextTrait;
 use Illuminate\Support\Facades\Auth;
