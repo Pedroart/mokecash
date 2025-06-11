@@ -8,7 +8,15 @@
         ['id' => 'etapa5', 'nombre' => 'Pago', 'clave' => 'pago'],
     ];
     $indiceEtapaActual = collect($etapas)->pluck('clave')->search($etapaActual);
+    
+    try {
+        $boletaId = $cotizacion->boleta() ?: 1;
+        $boletaUrl = route('boletas.show', ['boleta' => $boletaId]);
+    } catch (\Throwable $e) {
+        $boletaUrl = '#'; // Fallback seguro
+    }
 @endphp
+
 
 @extends('adminlte::page')
 

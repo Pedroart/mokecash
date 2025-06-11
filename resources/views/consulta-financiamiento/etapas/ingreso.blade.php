@@ -93,6 +93,7 @@
         Generar Boleta
     </button>
 @else
+
 @endif
 
 @if($vista_accion)
