@@ -124,5 +124,55 @@ function guardarDato(clave, valor) {
     });
 
 }
+
+function generarBoleta() {
+    const data = {
+        sku: '{{ $cotizacion->producto->codigo ?? 'PRD001' }}',
+        descripcion: '{{ $cotizacion->producto->nombre ?? 'Producto sin nombre' }}',
+        precio_con_igv: {{ $cotizacion->producto->precio ?? $cotizacion->monto }},
+        cantidad: 1,
+        cliente_nombre: '{{ $cotizacion->nombre_cliente }}',
+        cliente_documento: '{{ $cotizacion->dni_cliente }}',
+        cliente_direccion: '{{ $cotizacion->direccion }}',
+        lugar_venta: '{{ $cotizacion->tienda->nombre ?? "Tienda Principal" }}'
+    };
+
+    fetch('{{ url('/api/boletas') }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(async res => {
+        if (!res.ok) {
+            const err = await res.text();
+            console.error('❌ Error HTTP:', res.status, err);
+            alert('Error al generar la boleta');
+            return;
+        }
+        return res.json();
+    })
+    .then(data => {
+        if (data?.success) {
+            alert('✅ Boleta generada con éxito. Número: ' + data.numero_boleta);
+
+            // Desactiva el botón
+            document.getElementById('btn-generar-boleta').disabled = true;
+
+            // Guarda el ID de la boleta en la cotización
+            guardarDato('boleta_id', data.boleta_id);
+        } else {
+            console.error('⚠️ Respuesta inesperada:', data);
+            alert('No se pudo generar la boleta');
+        }
+    })
+    .catch(err => {
+        console.error('❌ Error de red:', err);
+        alert('Error de conexión');
+    });
+}
+
 </script>
 @endpush
