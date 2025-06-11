@@ -82,7 +82,7 @@ function avanzarEtapa(id) {
 }
 
 function guardarDato(clave, valor) {
-    if (!valor.trim()) {
+    if (!String(valor).trim()) {
         alert('El valor no puede estar vacío');
         return;
     }
