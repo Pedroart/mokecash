@@ -82,7 +82,7 @@ function avanzarEtapa(id) {
 }
 
 function guardarDato(clave, valor) {
-    if (!String(valor).trim()) {
+    if (typeof valor === 'string' && !valor.trim()) {
         alert('El valor no puede estar vacío');
         return;
     }
@@ -100,29 +100,25 @@ function guardarDato(clave, valor) {
         })
     })
     .then(async res => {
-        if (!res.ok) {
-            const errorText = await res.text();
-            console.error('❌ Error HTTP:', res.status, errorText);
-            alert('Error al guardar (HTTP)');
-            return;
-        }
-
-        return res.json();
-    })
-    .then(data => {
-        if (data?.success) {
-            alert('Dato guardado correctamente');
-            location.reload();
-        } else {
-            console.error('⚠️ Respuesta inesperada:', data);
-            alert('Error al guardar');
+        const text = await res.text();
+        try {
+            const data = JSON.parse(text);
+            if (data?.success) {
+                alert('Dato guardado correctamente');
+                location.reload();
+            } else {
+                console.error('⚠️ Respuesta inesperada:', data);
+                alert('Error al guardar');
+            }
+        } catch (e) {
+            console.error('❌ No es JSON válido:', text);
+            alert('Respuesta no válida del servidor');
         }
     })
     .catch(err => {
         console.error('❌ Error de red o JS:', err);
         alert('Error de conexión');
     });
-
 }
 
 function generarBoleta() {
@@ -146,26 +142,20 @@ function generarBoleta() {
         body: JSON.stringify(data)
     })
     .then(async res => {
-        if (!res.ok) {
-            const err = await res.text();
-            console.error('❌ Error HTTP:', res.status, err);
-            alert('Error al generar la boleta');
-            return;
-        }
-        return res.json();
-    })
-    .then(data => {
-        if (data?.success) {
-            alert('✅ Boleta generada con éxito. Número: ' + data.numero_boleta);
-
-            // Desactiva el botón
-            document.getElementById('btn-generar-boleta').disabled = true;
-
-            // Guarda el ID de la boleta en la cotización
-            guardarDato('boleta', data.boleta_id);
-        } else {
-            console.error('⚠️ Respuesta inesperada:', data);
-            alert('No se pudo generar la boleta');
+        const text = await res.text();
+        try {
+            const data = JSON.parse(text);
+            if (data?.success) {
+                alert('✅ Boleta generada con éxito. Número: ' + data.numero_boleta);
+                document.getElementById('btn-generar-boleta').disabled = true;
+                guardarDato('boleta', data.boleta_id);
+            } else {
+                console.error('⚠️ Respuesta inesperada:', data);
+                alert('No se pudo generar la boleta');
+            }
+        } catch (e) {
+            console.error('❌ No es JSON válido:', text);
+            alert('Respuesta inválida del servidor');
         }
     })
     .catch(err => {
@@ -173,6 +163,6 @@ function generarBoleta() {
         alert('Error de conexión');
     });
 }
-
 </script>
+
 @endpush
