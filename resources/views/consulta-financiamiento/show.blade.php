@@ -148,7 +148,7 @@ function generarBoleta() {
             if (data?.success) {
                 alert('✅ Boleta generada con éxito. Número: ' + data.numero_boleta);
                 document.getElementById('btn-generar-boleta').disabled = true;
-                guardarDato('boleta', data.boleta_id);
+                guardarDato('boleta', String(data.boleta_id));
             } else {
                 console.error('⚠️ Respuesta inesperada:', data);
                 alert('No se pudo generar la boleta');
