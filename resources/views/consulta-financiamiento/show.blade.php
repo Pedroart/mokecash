@@ -123,7 +123,7 @@ function guardarDato(clave, valor) {
 
 function generarBoleta() {
     const data = {
-        sku: '{{ $cotizacion->producto->codigo ?? 'PRD001' }}',
+        sku: '{{ $cotizacion->imei() ?? 'PRD001' }}',
         descripcion: '{{ $cotizacion->producto->nombre ?? 'Producto sin nombre' }}',
         precio_con_igv: {{ $cotizacion->producto->precio ?? $cotizacion->monto }},
         cantidad: 1,
