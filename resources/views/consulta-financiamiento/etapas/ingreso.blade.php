@@ -93,7 +93,7 @@
         Generar Boleta
     </button>
 @else
-    <a href="{{ route('boletas.view', ['id' => $boleta->id]) }}" class="btn btn-secondary mt-3 float-left">
+    <a href="{{ route('boletas.view', ['id' => $cotizacion->boleta()]) }}" class="btn btn-secondary mt-3 float-left">
         Ver Boleta Generada
     </a>
 @endif
