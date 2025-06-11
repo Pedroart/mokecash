@@ -162,7 +162,7 @@ function generarBoleta() {
             document.getElementById('btn-generar-boleta').disabled = true;
 
             // Guarda el ID de la boleta en la cotización
-            guardarDato('boleta_id', data.boleta_id);
+            guardarDato('boleta', data.boleta_id);
         } else {
             console.error('⚠️ Respuesta inesperada:', data);
             alert('No se pudo generar la boleta');
