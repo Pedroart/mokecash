@@ -86,7 +86,7 @@
     </div>
 </div>
 
-
+@if($vista_accion)
 @if(!$cotizacion->boleta())
     <button id="btn-generar-boleta" class="btn btn-success mt-3 float-left"
         onclick="generarBoleta()">
@@ -98,7 +98,6 @@
 </a>
 @endif
 
-@if($vista_accion)
 <button id="btn-goto-etapa2" class="btn btn-primary mt-3 float-right"
     onclick="avanzarEtapa({{ $cotizacion->id }})">
     Continuar a Validación Biométrica
