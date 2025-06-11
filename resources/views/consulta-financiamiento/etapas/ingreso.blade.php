@@ -86,6 +86,17 @@
     </div>
 </div>
 
+@if(!$cotizacion->boleta())
+    <button id="btn-generar-boleta" class="btn btn-success mt-3 float-left"
+        onclick="generarBoleta()">
+        Generar Boleta
+    </button>
+@else
+    <button class="btn btn-secondary mt-3 float-left" disabled>
+        Boleta Generada
+    </button>
+@endif
+
 @if($vista_accion)
 <button id="btn-goto-etapa2" class="btn btn-primary mt-3 float-right"
     onclick="avanzarEtapa({{ $cotizacion->id }})">

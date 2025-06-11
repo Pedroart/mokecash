@@ -86,6 +86,11 @@ class Cotizacion extends Model
         return $this->items->firstWhere('clave', 'imei')?->valor;
     }
 
+    public function boleta(): ?string
+    {
+        return $this->items->firstWhere('clave', 'boleta')?->valor;
+    }
+
     public function etapaProceso()
     {
         return $this->hasOne(\App\Models\EtapasProceso::class, 'cotizacion_id');
