@@ -86,6 +86,8 @@
     </div>
 </div>
 
+{{$cotizacion->boleta()? '<div class="alert alert-success mt-3">Boleta generada correctamente.</div>' : ''}}
+
 @if(!$cotizacion->boleta())
     <button id="btn-generar-boleta" class="btn btn-success mt-3 float-left"
         onclick="generarBoleta()">
@@ -103,3 +105,4 @@
     Continuar a Validación Biométrica
 </button>
 @endif
+
