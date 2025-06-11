@@ -86,7 +86,6 @@
     </div>
 </div>
 
-{{$cotizacion->boleta()}}
 
 @if(!$cotizacion->boleta())
     <button id="btn-generar-boleta" class="btn btn-success mt-3 float-left"
@@ -94,9 +93,9 @@
         Generar Boleta
     </button>
 @else
-    <button class="btn btn-secondary mt-3 float-left" disabled>
-        Boleta Generada
-    </button>
+    <a href="{{ route('boletas.view', ['id' => $boleta->id]) }}" class="btn btn-secondary mt-3 float-left">
+        Ver Boleta Generada
+    </a>
 @endif
 
 @if($vista_accion)
