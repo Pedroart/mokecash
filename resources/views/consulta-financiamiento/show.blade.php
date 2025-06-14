@@ -169,6 +169,54 @@ function generarBoleta() {
         alert('Error de conexión');
     });
 }
-</script>
 
+
+function subirArchivo(input) {
+    const file = input.files[0];
+    if (!file) {
+        alert('No se seleccionó ningún archivo');
+        return;
+    }
+
+    const clave = input.dataset.clave;
+    const cotizacionId = input.dataset.cotizacion;
+    const carpeta = input.dataset.carpeta;
+
+    const formData = new FormData();
+    formData.append("file", file, file.name);
+    formData.append("nombre", file.name);
+    formData.append("clave", clave);
+    formData.append("cotizacion_id", cotizacionId);
+    formData.append("carpeta", carpeta);
+
+    fetch("{{ url('/api/evidencias') }}", {
+        method: "POST",
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json'
+        },
+        body: formData
+    })
+    .then(async res => {
+        const text = await res.text();
+        try {
+            const data = JSON.parse(text);
+            if (res.ok) {
+                alert("✅ Archivo subido correctamente");
+                location.reload();
+            } else {
+                console.error("⚠️ Error del servidor:", data);
+                alert("❌ Falló la subida del archivo");
+            }
+        } catch (e) {
+            console.error("❌ No es JSON válido:", text);
+            alert("❌ Respuesta no válida del servidor");
+        }
+    })
+    .catch(err => {
+        console.error("❌ Error de red:", err);
+        alert("❌ Error de conexión");
+    });
+}
+</script>
 @endpush

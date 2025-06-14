@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cotizacion;
+use App\Models\ArchivadorProceso;
 use App\Http\Requests\CotizacionRequest;
+use App\Http\Requests\StoreEvidenciaRequest;
 use App\Traits\UserContextTrait;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\HandlesFileUploads;
 
 
 /**
@@ -15,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 class CotizacionController extends Controller
 {
 
-    use UserContextTrait;
+    use UserContextTrait, HandlesFileUploads;
 
     /**
      * Display a listing of the resource.
@@ -74,6 +77,24 @@ class CotizacionController extends Controller
         return redirect()->route('cotizacions.index')
             ->with('success', 'Cotizacion created successfully.');
     }
+
+    public function storeArchivo(StoreEvidenciaRequest $request)
+    {
+        $archivo = $this->guardarArchivo(
+            file: $request->file('file'),
+            nombreVisible: $request->nombre,
+            carpeta: $request->input('carpeta', 'uploads')
+        );
+
+        ArchivadorProceso::create([
+            'cotizacion_id' => $request->cotizacion_id,
+            'clave' => $request->clave,
+            'valor' => $archivo->id,
+        ]);
+
+        return response()->json($archivo, 201);
+    }
+
 
     /**
      * Display the specified resource.

@@ -91,6 +91,32 @@ class Cotizacion extends Model
         return $this->items->firstWhere('clave', 'boleta')?->valor;
     }
 
+    public function boletafirmada(): ?string
+    {
+        return $this->items->firstWhere('clave', 'boletafirmada')?->valor;
+    }
+
+    public function dniSuperior(): ?string
+    {
+        return $this->items->firstWhere('clave', 'dni_superior')?->valor;
+    }
+
+    public function dniInferior(): ?string
+    {
+        return $this->items->firstWhere('clave', 'dni_inferior')?->valor;
+    }
+
+    public function facturaMoke(): ?string
+    {
+        return $this->items->firstWhere('clave', 'factura_moke')?->valor;
+    }
+
+    public function pago(): ?string
+    {
+        return $this->items->firstWhere('clave', 'pago')?->valor;
+    }
+
+
     public function etapaProceso()
     {
         return $this->hasOne(\App\Models\EtapasProceso::class, 'cotizacion_id');

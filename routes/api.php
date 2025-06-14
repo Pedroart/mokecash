@@ -22,6 +22,7 @@ Route::get('/calidda/linea-credito', [CalidaLineaCreditoController::class, 'cons
 Route::get('/tiendas/{tiendaId}/productos', [ProductoController::class, 'productosPorTienda']);
 Route::post('/archivador-procesos', [ArchivadorProcesoController::class, 'store2']);
 Route::post('/boletas', [BoletaController::class, 'generar']);
+Route::post('/evidencias', [CotizacionController::class, 'storeArchivo']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

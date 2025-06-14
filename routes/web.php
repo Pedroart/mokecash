@@ -11,7 +11,8 @@ use App\Http\Controllers\CalidaCredentialController;
 use App\Http\Controllers\CalidaTokenController;
 use App\Http\Controllers\BoletaController;
 use App\Http\Controllers\ArchivadorProcesoController;
-
+use App\Http\Controllers\ArchivoController;
+use App\Models\Archivo;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('calida-credentials', CalidaCredentialController::class);
     Route::resource('calida-tokens', CalidaTokenController::class);
     Route::resource('boletas', BoletaController::class);
+    Route::resource('archivos', ArchivoController::class);
 
     Route::resource('archivador-procesos', ArchivadorProcesoController::class);
 
@@ -51,6 +53,17 @@ Route::middleware(['auth'])->group(function () {
         return view('consulta-financiamiento.index');
     });
 });
+
+
+Route::get('/archivo/{id}/ver', function ($id) {
+    $archivo = Archivo::findOrFail($id);
+
+    // Este es el path público relativo a public/
+    $publicPath = "storage/" . $archivo->path;
+
+    // Retornar una vista con el archivo incrustado (PDF, imagen, etc.)
+    return response()->file(public_path($publicPath));
+})->name('archivo.ver');
 
 Route::get('/clear-cache', function() {
     Artisan::call('cache:clear');          // caché de la app
