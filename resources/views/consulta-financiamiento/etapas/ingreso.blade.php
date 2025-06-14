@@ -86,6 +86,7 @@
     </div>
 </div>
 
+
 @if($vista_accion)
 @if(!$cotizacion->boleta())
     <button id="btn-generar-boleta" class="btn btn-success mt-3 float-left"

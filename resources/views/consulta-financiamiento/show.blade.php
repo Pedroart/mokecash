@@ -28,8 +28,6 @@
 
 @section('content')
 
-{{$cotizacion->etapaActual() }}
-
 <div class="card">
     <div class="card-header p-0">
         {{-- Tabs dinámicas --}}
