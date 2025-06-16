@@ -47,7 +47,7 @@
                     <tr>
                         <th>Cant.</th>
                         <th>Producto</th>
-                        <th>SKU</th>
+                        <th>IMEI</th>
                         <th>Unidad</th>
                         <th>V. Unitario</th>
                         <th>Total</th>
