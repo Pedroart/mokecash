@@ -87,7 +87,7 @@
     @if($vista_accion)
     <div class="col-md-6 mb-3">
         <label class="form-label">Precio de Financiamiento</label>
-        <input type="text" class="form-control" value="S/ {{ number_format($cotizacion->monto, 2) }}" disabled>
+        <input type="text" class="form-control" value="S/ {{ number_format($cotizacion->monto_financiado, 2) }}" disabled>
     </div>
 @endif
 </div>
