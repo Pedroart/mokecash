@@ -13,10 +13,10 @@
                 <div class="card">
                     <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Boletaitem</span>
+                            <span class="card-title">{{ __('Ver') }} Boletaitem</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary btn-sm" href="{{ route('boletaitems.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary btn-sm" href="{{ route('boletaitems.index') }}"> {{ __('Regresar') }}</a>
                         </div>
                     </div>
 

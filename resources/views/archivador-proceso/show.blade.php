@@ -13,10 +13,10 @@
                 <div class="card">
                     <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Archivador Proceso</span>
+                            <span class="card-title">{{ __('Ver') }} Archivador Proceso</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary btn-sm" href="{{ route('archivador-procesos.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary btn-sm" href="{{ route('archivador-procesos.index') }}"> {{ __('Regresar') }}</a>
                         </div>
                     </div>
 

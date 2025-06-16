@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', __('Update') . ' Boletaitem')
+@section('title', __('Actualizar') . ' Boletaitem')
 
 @section('content_header')
-    <h1>{{ __('Update') }} Boletaitem</h1>
+    <h1>{{ __('Actualizar') }} Boletaitem</h1>
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">{{ __('Update') }} Boletaitem</span>
+                        <span class="card-title">{{ __('Actualizar') }} Boletaitem</span>
                     </div>
                     <div class="card-body bg-white">
                         <form method="POST" action="{{ route('boletaitems.update', $boletaitem->id) }}"  role="form" enctype="multipart/form-data">

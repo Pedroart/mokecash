@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', __('Update') . ' Cotizacion')
+@section('title', __('Actualizar') . ' Cotizacion')
 
 @section('content_header')
-    <h1>{{ __('Update') }} Cotizacion</h1>
+    <h1>{{ __('Actualizar') }} Cotizacion</h1>
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">{{ __('Update') }} Cotizacion</span>
+                        <span class="card-title">{{ __('Actualizar') }} Cotizacion</span>
                     </div>
                     <div class="card-body bg-white">
                         <form method="POST" action="{{ route('cotizacions.update', $cotizacion->id) }}"  role="form" enctype="multipart/form-data">

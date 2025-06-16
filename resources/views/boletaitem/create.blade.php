@@ -3,7 +3,7 @@
 @section('title', __('Create') . ' Boletaitem')
 
 @section('content_header')
-    <h1>{{ __('Create') }} Boletaitem</h1>
+    <h1>{{ __('Crear') }} Boletaitem</h1>
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">{{ __('Create') }} Boletaitem</span>
+                        <span class="card-title">{{ __('Crear') }} Boletaitem</span>
                     </div>
                     <div class="card-body bg-white">
                         <form method="POST" action="{{ route('boletaitems.store') }}"  role="form" enctype="multipart/form-data">

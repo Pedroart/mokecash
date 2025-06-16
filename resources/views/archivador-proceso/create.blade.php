@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', __('Create') . ' Archivador Proceso')
+@section('title', __('Crear') . ' Archivador Proceso')
 
 @section('content_header')
-    <h1>{{ __('Create') }} Archivador Proceso</h1>
+    <h1>{{ __('Crear') }} Archivador Proceso</h1>
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">{{ __('Create') }} Archivador Proceso</span>
+                        <span class="card-title">{{ __('Crear') }} Archivador Proceso</span>
                     </div>
                     <div class="card-body bg-white">
                         <form method="POST" action="{{ route('archivador-procesos.store') }}"  role="form" enctype="multipart/form-data">
