@@ -102,7 +102,10 @@
             autoWidth: false,
             order: [[0, 'asc']],
             lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-            pageLength: 10
+            pageLength: 10,
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/2.3.2/i18n/es-ES.json"
+            },
         });
     });
     </script>
