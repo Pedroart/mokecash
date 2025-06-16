@@ -74,8 +74,8 @@ class CotizacionController extends Controller
             'estado' => 'ingreso',
         ]);
 
-        return redirect()->route('cotizacions.index')
-            ->with('success', 'Cotizacion created successfully.');
+        return redirect()->route('cotizacions.show', $cotizacion->id)
+        ->with('success', 'Cotización creada correctamente.');
     }
 
     public function storeArchivo(StoreEvidenciaRequest $request)

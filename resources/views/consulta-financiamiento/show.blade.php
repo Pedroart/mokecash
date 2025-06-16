@@ -131,7 +131,7 @@ function generarBoleta() {
     const data = {
         sku: '{{ $cotizacion->imei() ?? 'PRD001' }}',
         descripcion: '{{ $cotizacion->producto->nombre ?? 'Producto sin nombre' }}',
-        precio_con_igv: {{ $cotizacion->producto->precio ?? $cotizacion->monto }},
+        precio_con_igv: {{ $cotizacion->monto_financiado }},
         cantidad: 1,
         cliente_nombre: '{{ $cotizacion->nombre_cliente }}',
         cliente_documento: '{{ $cotizacion->dni_cliente }}',

@@ -96,5 +96,9 @@
 <div class="text-right mt-4">
     @if($vista_accion)
     <button type="button" id="btn-goto-etapa4" class="btn btn-primary" onclick="avanzarEtapa({{ $cotizacion->id }})" >Subir Evidencias y Continuar</button>
+    @else
+    <button class="btn btn-primary" onclick="location.reload();">
+    Siguiente paso
+    </button>
     @endif
 </div>

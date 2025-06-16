@@ -98,5 +98,9 @@
     onclick="avanzarEtapa({{ $cotizacion->id }})">
     Continuar a Validación Biométrica
 </button>
+@else
+<button class="btn btn-primary" onclick="location.reload();">
+  Siguiente paso
+</button>
 @endif
 

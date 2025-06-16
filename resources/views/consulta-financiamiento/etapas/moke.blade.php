@@ -28,5 +28,9 @@
     @if($vista_accion)
     <button type="button" id="btn-goto-etapa5" class="btn btn-primary"
     onclick="avanzarEtapa({{ $cotizacion->id }})">Subir Boleta y Continuar a Pago</button>
+    @else
+    <button class="btn btn-primary" onclick="location.reload();">
+    Siguiente paso
+    </button>
     @endif
 </div>

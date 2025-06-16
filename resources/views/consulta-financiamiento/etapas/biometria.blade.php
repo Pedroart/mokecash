@@ -24,6 +24,9 @@
 
 @if($vista_accion)
     <button type="button" id="btn-goto-etapa3" class="btn btn-primary" onclick="avanzarEtapa({{ $cotizacion->id }})" >Confirmar Validación y Continuar</button>
-    
-    @endif
+@else
+<button class="btn btn-primary" onclick="location.reload();">
+  Siguiente paso
+</button>    
+@endif
 </div>
