@@ -15,11 +15,9 @@
         Generar Boleta
     </button>
 @else
-@if($vista_accion)
 <a href="{{ $boletaUrl }}" class="btn btn-secondary mt-3 float-left">
     Ver Boleta Generada
 </a>
-@endif
 @endif
 
 @if($vista_accion)
