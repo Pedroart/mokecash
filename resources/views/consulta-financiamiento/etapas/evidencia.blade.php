@@ -15,7 +15,7 @@
         @else
         <div class="custom-file">
             <input type="file" class="custom-file-input"
-                id="file-boleta" accept="application/pdf"
+                id="file-boleta" accept="image/*"
                 data-clave="boletafirmada"
                 data-cotizacion="{{ $cotizacion->id }}"
                 data-carpeta="uploads/evidencias"

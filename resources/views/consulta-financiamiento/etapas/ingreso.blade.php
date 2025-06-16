@@ -74,7 +74,7 @@
         <input type="text" class="form-control" value="{{ $cotizacion->producto->nombre ?? 'Producto no disponible' }}" disabled>
     </div>
     <div class="col-md-6 mb-3">
-        <label class="form-label">Precio</label>
+        <label class="form-label">Precio al contado</label>
         <input type="text" class="form-control" value="S/ {{ number_format($cotizacion->producto->precio ?? $cotizacion->monto, 2) }}" disabled>
     </div>
 </div>
@@ -84,21 +84,16 @@
         <label class="form-label">Número de cuotas</label>
         <input type="text" class="form-control" value="{{ $cotizacion->cuotas }}" disabled>
     </div>
+    @if($vista_accion)
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Precio de Financiamiento</label>
+        <input type="text" class="form-control" value="S/ {{ number_format($cotizacion->monto, 2) }}" disabled>
+    </div>
+@endif
 </div>
 
 
 @if($vista_accion)
-@if(!$cotizacion->boleta())
-    <button id="btn-generar-boleta" class="btn btn-success mt-3 float-left"
-        onclick="generarBoleta()">
-        Generar Boleta
-    </button>
-@else
-<a href="{{ $boletaUrl }}" class="btn btn-secondary mt-3 float-left">
-    Ver Boleta Generada
-</a>
-@endif
-
 <button id="btn-goto-etapa2" class="btn btn-primary mt-3 float-right"
     onclick="avanzarEtapa({{ $cotizacion->id }})">
     Continuar a Validación Biométrica

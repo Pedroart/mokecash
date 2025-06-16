@@ -9,9 +9,18 @@
 </div>
 <div class="d-flex justify-content-between mt-4">
     
+@if(!$cotizacion->boleta())
+    <button id="btn-generar-boleta" class="btn btn-success mt-3 float-left"
+        onclick="generarBoleta()">
+        Generar Boleta
+    </button>
+@else
+@if($vista_accion)
 <a href="{{ $boletaUrl }}" class="btn btn-secondary mt-3 float-left">
     Ver Boleta Generada
 </a>
+@endif
+@endif
 
 @if($vista_accion)
     <button type="button" id="btn-goto-etapa3" class="btn btn-primary" onclick="avanzarEtapa({{ $cotizacion->id }})" >Confirmar Validación y Continuar</button>
