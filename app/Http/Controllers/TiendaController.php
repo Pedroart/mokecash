@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Tienda;
 use App\Http\Requests\TiendaRequest;
+use App\Models\User;
+use App\Models\Personaltienda;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 /**
  * Class TiendaController
@@ -33,12 +37,43 @@ class TiendaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TiendaRequest $request)
+    public function storeSave(TiendaRequest $request)
     {
         Tienda::create($request->validated());
 
         return redirect()->route('tiendas.index')
             ->with('success', 'Tienda created successfully.');
+    }
+
+    public function store(TiendaRequest $request){
+        $tienda = Tienda::create($request->validated());
+
+        // Generar subdominio a partir del nombre
+        $subdominio = Str::slug($tienda->nombre); // Ej: "PDV MARIO UNICACHI" → "pdv-mario-unicachi"
+        $dominioBase = "pe";
+        $password = $subdominio.'*';
+
+        foreach (['admin_tienda', 'vendedor'] as $rol) {
+            $email = "{$rol}@{$subdominio}.{$dominioBase}";
+
+            $user = User::firstOrCreate(
+                ['email' => $email],
+                [
+                    'name' => ucfirst($rol) . ' ' . ucfirst($tienda->nombre),
+                    'password' => Hash::make($password),
+                ]
+            );
+
+            $user->assignRole($rol);
+
+            Personaltienda::firstOrCreate([
+                'user_id' => $user->id,
+                'tienda_id' => $tienda->id,
+            ]);
+        }
+
+        return redirect()->route('tiendas.index')
+            ->with('success', 'Tienda y usuarios creados correctamente.');
     }
 
     /**

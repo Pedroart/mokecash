@@ -22,9 +22,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolesAndPermissionsSeeder::class,
             Users::class,
-            TiendaTest::class,
+            //TiendaTest::class,
             CalidaCredentialSeeder::class,
-            BoletaSeeder::class,
+            //BoletaSeeder::class,
         ]);
     }
 }

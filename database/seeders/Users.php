@@ -25,17 +25,14 @@ class Users extends Seeder
         // DataDummy
 
         $roles = [
-            'admin',
             'validador',
             'finanzas',
             'promotor',
-            'admin_tienda',
-            'vendedor',
         ];
 
         foreach ($roles as $rol) {
             $user = User::firstOrCreate(
-                ['email' => "$rol@testienda.com"],
+                ['email' => "$rol@moke.pe"],
                 [
                     'name' => ucfirst($rol) . 'Tiendas',
                     'password' => Hash::make('moke*'),

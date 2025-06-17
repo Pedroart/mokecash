@@ -86,7 +86,7 @@ class UserController extends Controller
     {
         $user->update($request->validated());
 
-        $user->assignRole($request->role);
+        $user->syncRoles([$request->role]); 
 
         return redirect()->route('users.index')
             ->with('success', 'User updated successfully');
