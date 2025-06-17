@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use App\Models\Boleta;
 use App\Models\Boletaitem;
+use App\Models\Cotizacion;
 use Illuminate\Routing\Controller;
 use App\Http\Requests\BoletaRequest;
 
@@ -88,23 +89,35 @@ class BoletaController extends Controller
     public function generar(Request $request)
     {
         $request->validate([
-            'sku' => 'required|string',
-            'descripcion' => 'required|string',
-            'precio_con_igv' => 'required|numeric',
-            'cantidad' => 'required|integer|min:1',
+            'cotizacion' => 'required|string',
             'cliente_nombre' => 'required|string',
             'cliente_documento' => 'required|string',
             'cliente_direccion' => 'required|string',
             'lugar_venta' => 'required|string',
         ]);
 
+
         $data = $request->all();
         $igv_porcentaje = 18;
         $factor = 1 + ($igv_porcentaje / 100);
+        $margen = 1.3;
+        $cotizacion = Cotizacion::find($data['cotizacion']);
+        $productos = $cotizacion->productos;
 
-        $valor_unitario = round($data['precio_con_igv'] / $factor, 2);
-        $valor_total = round($valor_unitario * $data['cantidad'], 2);
-        $igv_total = round($valor_total * ($igv_porcentaje / 100), 2);
+        $remapeado = $cotizacion->productos->map(function ($producto) use ($margen, $igv_porcentaje) {
+            $precio_con_igv = round($producto->producto->precio * $margen,0);
+            $igv = round($producto->producto->precio * $igv_porcentaje/100, 2);
+            return [
+                'descripcion' => $producto->producto->nombre,
+                'precio_sin_igv' => $precio_con_igv-$igv,
+                'precio_con_igv' => $precio_con_igv,
+                'igv' => $igv,
+                'sku' => $producto->imei,
+            ];
+        });
+
+        $valor_total = $remapeado->sum('precio_sin_igv');
+        $igv_total = $remapeado->sum('igv');
         $importe_total = $valor_total + $igv_total;
 
         $numero = Boleta::max('numero') + 1;
@@ -145,19 +158,21 @@ class BoletaController extends Controller
             'sunat_resolucion' => 'RSN° 018-005-000152',
         ]);
 
-        Boletaitem::create([
-            'boleta_id' => $boleta->id,
-            'sku' => $data['sku'],
-            'descripcion' => $data['descripcion'],
-            'unidad_de_medida' => 'NIU',
-            'cantidad' => $data['cantidad'],
-            'valor_unitario' => $valor_unitario,
-            'precio_unitario_con_igv' => $data['precio_con_igv'],
-            'codigo_tipo_afectacion_igv' => '10',
-            'porcentaje_igv' => $igv_porcentaje,
-            'descuento_item' => 0.00,
-            'total_item' => $valor_total,
-        ]);
+        foreach($remapeado as $item){
+            Boletaitem::create([
+                'boleta_id' => $boleta->id,
+                'sku' => $item['sku'],
+                'descripcion' => $item['descripcion'],
+                'unidad_de_medida' => 'NIU',
+                'cantidad' => 1,
+                'valor_unitario' => $item['precio_sin_igv'],
+                'precio_unitario_con_igv' => $item['precio_con_igv'],
+                'codigo_tipo_afectacion_igv' => '10',
+                'porcentaje_igv' => $item['igv'],
+                'descuento_item' => 0.00,
+                'total_item' => $item['precio_con_igv'],
+            ]);
+        }
 
         return response()->json([
             'success' => true,
@@ -166,27 +181,62 @@ class BoletaController extends Controller
         ]);
     }
 
-    private function numeroALetras($numero)
-    {
+    private function numeroALetras($numero){
         $entero = floor($numero);
         $decimales = round(($numero - $entero) * 100);
 
-        $unidades = [
-            '', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'
-        ];
-
+        $unidades = ['', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
         $decenas = [
-            '', 'diez', 'veinte', 'treinta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa'
+            '', 'diez', 'veinte', 'treinta', 'cuarenta', 'cincuenta',
+            'sesenta', 'setenta', 'ochenta', 'noventa'
+        ];
+        $centenas = [
+            '', 'ciento', 'doscientos', 'trescientos', 'cuatrocientos',
+            'quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos'
         ];
 
-        if ($entero < 10) {
-            $letras = $unidades[$entero];
-        } elseif ($entero < 100) {
-            $letras = $decenas[intval($entero / 10)] . ' y ' . $unidades[$entero % 10];
+        // Casos especiales
+        $especiales = [
+            10 => 'diez', 11 => 'once', 12 => 'doce', 13 => 'trece', 14 => 'catorce',
+            15 => 'quince', 20 => 'veinte'
+        ];
+
+        $letras = '';
+
+        if ($entero == 0) {
+            $letras = 'cero';
+        } elseif ($entero == 100) {
+            $letras = 'cien';
         } else {
-            $letras = $entero; // simplificado
+            if ($entero >= 1000) {
+                $mil = intdiv($entero, 1000);
+                $letras .= ($mil == 1 ? 'mil' : $unidades[$mil] . ' mil');
+                $entero = $entero % 1000;
+                if ($entero > 0) $letras .= ' ';
+            }
+            if ($entero >= 100) {
+                $letras .= $centenas[intdiv($entero, 100)];
+                $entero = $entero % 100;
+                if ($entero > 0) $letras .= ' ';
+            }
+            if ($entero >= 10) {
+                if (isset($especiales[$entero])) {
+                    $letras .= $especiales[$entero];
+                    $entero = 0;
+                } else {
+                    $letras .= $decenas[intdiv($entero, 10)];
+                    if ($entero % 10 != 0) {
+                        $letras .= ' y ' . $unidades[$entero % 10];
+                    }
+                    $entero = 0;
+                }
+            }
+            if ($entero > 0) {
+                $letras .= $unidades[$entero];
+            }
         }
 
-        return strtoupper($letras) . ' Y ' . str_pad($decimales, 2, '0', STR_PAD_LEFT) . '/100 SOLES';
+        return strtoupper(trim($letras)) . ' Y ' . str_pad($decimales, 2, '0', STR_PAD_LEFT) . '/100 SOLES';
     }
+
 }

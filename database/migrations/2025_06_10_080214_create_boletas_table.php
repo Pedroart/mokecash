@@ -35,9 +35,9 @@ return new class extends Migration
             $table->string('cliente_direccion', 255)->nullable(); // Dirección del cliente
 
             // Montos y Totales
-            $table->decimal('total_gravada', 10, 2); // Subtotal antes de IGV (valor_venta en API)
-            $table->decimal('total_igv', 10, 2); // Monto calculado de IGV (18%)
-            $table->decimal('importe_total', 10, 2); // Gran total (Gravada + IGV)
+            $table->decimal('total_gravada', 12, 2); // Subtotal antes de IGV (valor_venta en API)
+            $table->decimal('total_igv', 12, 2); // Monto calculado de IGV (18%)
+            $table->decimal('importe_total', 12, 2); // Gran total (Gravada + IGV)
             $table->string('importe_letras', 500)->nullable(); // SON: escrito lo pagado
 
             // Información de Pago

@@ -32,6 +32,7 @@
                 <input type="hidden" name="monto_financiado" id="input-financiado">
                 <input type="hidden" name="estatus" id="input-estatus" value="activo">
                 <input type="hidden" name="ip_origen" id="input-ip">
+                <input type="hidden" name="productos_json" id="input-productos-json">
 
                 <div class="form-group">
                     <label for="cuotas" class="font-weight-bold">Seleccione número de cuotas:</label>
@@ -109,7 +110,10 @@
                     <div>
                         <div id="detalle-cliente" class="text-muted mb-2">Cliente: ---<br>DNI: ---</div>
                         <div id="detalle-producto" class="font-weight-bold mb-2">Línea Aprobada: ---</div>
-                        <div id="producto-seleccionado" class="font-weight-bold mb-2">Producto seleccionado: ---</div>
+                        <h6 class="mt-3">🛒 Productos Seleccionados:</h6>
+                        <ul class="list-unstyled mb-3" id="producto-seleccionado">
+                        </ul>
+                        
                         <table class="table table-sm table-hover text-center align-middle">
                             <thead class="thead-light">
                                 <tr>
@@ -157,7 +161,7 @@
 let tienda_id= {{ $tienda_id }};
 let tablaProductos;
 let clienteSeleccionado = null;
-let productoSeleccionado = null;
+let productoSeleccionado = [];
 let margen = 1.3
 
 $(document).ready(function () {
@@ -166,6 +170,7 @@ $(document).ready(function () {
         responsive: true,
         pageLength: 10,
         lengthChange: false,
+        select: true,
         columns: [
             { data: 'nombre' },
             { data: 'precio' },
@@ -174,8 +179,11 @@ $(document).ready(function () {
         language: {
             url: "https://cdn.datatables.net/plug-ins/2.3.2/i18n/es-ES.json"
         },
+        dom: '<"d-flex justify-content-between mb-2"<"text-start"f><"text-end"l>>tip'
     });
 });
+
+
 
 function consultarCliente() {
     const dni = document.getElementById('dni').value.trim();
@@ -275,7 +283,7 @@ function actualizarProductos(linea) {
                 tablaProductos.row.add({
                     nombre: p.nombre,
                     precio: `S/ ${parseFloat(p.precio).toFixed(2)}`,
-                    accion: `<button class="btn btn-outline-primary btn-sm" onclick="seleccionarProducto(${p.id}, '${p.nombre}', ${parseFloat(p.precio)})">
+                    accion: `<button class="btn btn-outline-primary btn-sm" onclick="seleccionarProducto(this, ${p.id}, '${p.nombre}', ${parseFloat(p.precio)})">
                                 Seleccionar
                              </button>`
                 });
@@ -290,15 +298,62 @@ function actualizarProductos(linea) {
 }
 
 
-function seleccionarProducto(id, nombre, precio) {
+function seleccionarProducto(botonDOM, id, nombre, precio) {
+
     // Actualizar cuotas en base al precio del celular
-    actualizarCuotas(precio);
+    //actualizarCuotas(precio);
 
     // Actualizar visualmente el producto seleccionado (opcional)
-    document.getElementById('producto-seleccionado').innerText =
-        `Producto seleccionado: ${nombre} - Precio: S/ ${precio.toFixed(2)}`;
+    //document.getElementById('producto-seleccionado').innerText =
+    //    `Producto seleccionado: ${nombre} - Precio: S/ ${precio.toFixed(2)}`;
 
-    productoSeleccionado = { id, nombre, precio };
+    const totalActual = productoSeleccionado.reduce((sum, p) => sum + p.precio, 0);
+    const totalNuevo = totalActual + precio;
+
+
+    if (totalNuevo > clienteSeleccionado.linea_aprobada) {
+        alert('La suma total supera la línea de crédito aprobada.');
+        return;
+    }
+
+    productoSeleccionado.push({ id, nombre, precio });
+    actualizarResumenSeleccionados();
+}
+
+function actualizarResumenSeleccionados() {
+    const contenedor = document.getElementById('producto-seleccionado');
+
+    if (productoSeleccionado.length === 0) {
+        contenedor.innerHTML = '<p>Producto no seleccionado</p>';
+        return;
+    }
+
+    let html = '<ul class="list-group">';
+    productoSeleccionado.forEach(p => {
+        html += `
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                ${p.nombre} - S/ ${p.precio.toFixed(2)}
+                <button class="btn btn-sm btn-danger" onclick="deseleccionarProductoPorId(${p.id})">❌ Quitar</button>
+            </li>
+        `;
+    });
+    html += '</ul>';
+
+    contenedor.innerHTML = `
+        ${html}
+    `;
+
+    const totalActual = productoSeleccionado.reduce((sum, p) => sum + p.precio, 0);
+    actualizarCuotas(totalActual);
+}
+
+function deseleccionarProductoPorId(id) {
+    // Eliminar de la lista
+    
+    const seleccionadoproducto = productoSeleccionado.findLastIndex(p => p.id !== id);
+    productoSeleccionado.pop(seleccionadoproducto);
+    // Actualizar el resumen visual
+    actualizarResumenSeleccionados();
 }
 
 
@@ -310,12 +365,15 @@ async function mostrarFormulario() {
     const ip = await obtenerIP();
 
     // Setear valores en inputs ocultos
+    const monto = productoSeleccionado.reduce((sum, p) => sum + p.precio, 0);
+
     document.getElementById('input-dni').value = clienteSeleccionado.dni;
     document.getElementById('input-nombre').value = clienteSeleccionado.nombre;
     document.getElementById('input-producto').value = productoSeleccionado.id;
-    document.getElementById('input-precio').value = productoSeleccionado.precio;
-    document.getElementById('input-financiado').value = productoSeleccionado.precio*margen;
+    document.getElementById('input-precio').value = monto;
+    document.getElementById('input-financiado').value = monto*margen;
     document.getElementById('input-ip').value = ip;
+    document.getElementById('input-productos-json').value = JSON.stringify(productoSeleccionado);
 
     const selectDireccion = document.getElementById('input-direccion');
     selectDireccion.innerHTML = '<option value="">-- Seleccione --</option>'; // limpiar

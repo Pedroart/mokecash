@@ -12,11 +12,6 @@
             {!! $errors->first('vendedor_id', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
         <div class="form-group mb-2 mb20">
-            <label for="producto_id" class="form-label">{{ __('Producto Id') }}</label>
-            <input type="text" name="producto_id" class="form-control @error('producto_id') is-invalid @enderror" value="{{ old('producto_id', $cotizacion?->producto_id) }}" id="producto_id" placeholder="Producto Id">
-            {!! $errors->first('producto_id', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
-        </div>
-        <div class="form-group mb-2 mb20">
             <label for="dni_cliente" class="form-label">{{ __('Dni Cliente') }}</label>
             <input type="text" name="dni_cliente" class="form-control @error('dni_cliente') is-invalid @enderror" value="{{ old('dni_cliente', $cotizacion?->dni_cliente) }}" id="dni_cliente" placeholder="Dni Cliente">
             {!! $errors->first('dni_cliente', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}

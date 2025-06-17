@@ -4,8 +4,8 @@
         ['id' => 'etapa1', 'nombre' => 'Ingreso de Datos', 'clave' => 'ingreso'],
         ['id' => 'etapa2', 'nombre' => 'Validación Biométrica', 'clave' => 'biometria'],
         ['id' => 'etapa3', 'nombre' => 'Evidencias', 'clave' => 'validacion'],
-        ['id' => 'etapa4', 'nombre' => 'Subida a MOKE', 'clave' => 'boleta'],
-        ['id' => 'etapa5', 'nombre' => 'Pago', 'clave' => 'pago'],
+        ['id' => 'etapa4', 'nombre' => 'Emitir Factura a Moke', 'clave' => 'boleta'],
+        ['id' => 'etapa5', 'nombre' => 'Revisar Pago de Moke', 'clave' => 'pago'],
     ];
     $indiceEtapaActual = collect($etapas)->pluck('clave')->search($etapaActual);
     
@@ -82,6 +82,25 @@
 @push('js')
 <script>
 
+function verificarEtapaYContinuar() {
+    fetch(`/cotizacion/{{ $cotizacion->id }}/etapa`)
+        .then(response => response.json())
+        .then(data => {
+            const etapaServidor = data.etapa_actual;
+            const etapaLocal = '{{ $etapaActual }}';
+
+            if (etapaServidor !== etapaLocal) {
+                location.reload();
+            } else {
+                alert('Aún no puedes avanzar. Espera la autorización de BackOffice.');
+            }
+        })
+        .catch(error => {
+            console.error('Error al consultar la etapa:', error);
+            alert('Ocurrió un error al verificar la etapa.');
+        });
+}
+
 function avanzarEtapa(id) {
     const url = `/cotizacion/${id}/avanzar-etapa`; // O usa la ruta nombrada con Blade
     window.location.href = url;
@@ -111,7 +130,7 @@ function guardarDato(clave, valor) {
             const data = JSON.parse(text);
             if (data?.success) {
                 alert('Dato guardado correctamente');
-                location.reload();
+                //location.reload();
             } else {
                 console.error('⚠️ Respuesta inesperada:', data);
                 alert('Error al guardar');
@@ -129,7 +148,7 @@ function guardarDato(clave, valor) {
 
 function generarBoleta() {
     const data = {
-        sku: '{{ $cotizacion->imei() ?? 'PRD001' }}',
+        cotizacion: '{{ $cotizacion->id }}',
         descripcion: '{{ $cotizacion->producto->nombre ?? 'Producto sin nombre' }}',
         precio_con_igv: {{ $cotizacion->monto_financiado }},
         cantidad: 1,
@@ -218,5 +237,32 @@ function subirArchivo(input) {
         alert("❌ Error de conexión");
     });
 }
+
+
+function guardarIMEI(id, imei) {
+    fetch('/cotizacion-producto/' + id + '/imei', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content
+        },
+        body: JSON.stringify({ imei })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert('IMEI guardado correctamente');
+        } else {
+            alert('Error al guardar el IMEI');
+        }
+    })
+    .catch(error => {
+        console.error('Error al guardar:', error);
+        alert('Fallo al guardar IMEI');
+    });
+}
+
+
+
 </script>
 @endpush

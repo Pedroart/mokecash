@@ -3,27 +3,34 @@
 
 <div class="row">
 
-    {{-- 1. Boleta firmada --}}
-    <div class="col-md-6 form-group">
-        <label for="file-boleta">1. Boleta firmada (PDF)</label>
-        @if($cotizacion->boletafirmada())
-            <div class="mb-2">
+    <div class="col-md-6 form-group" x-data="{ archivoActual: '{{ $cotizacion->boletafirmada() }}', editando: false }">
+        <label for="file-boleta">1. Boleta firmada</label>
+
+        <template x-if="archivoActual && !editando">
+            <div class="mb-2 input-group">
                 <a href="{{ route('archivo.ver', $cotizacion->boletafirmada()) }}" target="_blank" class="btn btn-outline-success btn-sm">
                     Ver archivo actual
                 </a>
+                <div class="input-group-append ml-2">
+                    <button type="button" class="btn btn-outline-primary btn-sm" @click="editando = true">Reemplazar</button>
+                </div>
             </div>
-        @else
-        <div class="custom-file">
-            <input type="file" class="custom-file-input"
-                id="file-boleta" accept="image/*"
-                data-clave="boletafirmada"
-                data-cotizacion="{{ $cotizacion->id }}"
-                data-carpeta="uploads/evidencias"
-                onchange="subirArchivo(this)">
-            <label class="custom-file-label" for="file-boleta">Seleccionar archivo...</label>
-        </div>
-        @endif
+        </template>
+
+        <template x-if="!archivoActual || editando">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input"
+                    id="file-boleta"
+                    accept="image/*"
+                    data-clave="boletafirmada"
+                    data-cotizacion="{{ $cotizacion->id }}"
+                    data-carpeta="uploads/evidencias"
+                    onchange="subirArchivo(this)">
+                <label class="custom-file-label" for="file-boleta">Seleccionar archivo...</label>
+            </div>
+        </template>
     </div>
+
 
     {{-- 2. DNI superior --}}
     <div class="col-md-6 form-group">
@@ -97,7 +104,7 @@
     @if($vista_accion)
     <button type="button" id="btn-goto-etapa4" class="btn btn-primary" onclick="avanzarEtapa({{ $cotizacion->id }})" >Subir Evidencias y Continuar</button>
     @else
-    <button class="btn btn-primary" onclick="location.reload();">
+    <button class="btn btn-primary" onclick="verificarEtapaYContinuar();">
     Siguiente paso
     </button>
     @endif

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('tienda_id')->constrained('tiendas');
             $table->foreignId('vendedor_id')->constrained('users');
-            $table->foreignId('producto_id')->constrained();
 
             $table->string('dni_cliente');
             $table->string('nombre_cliente');

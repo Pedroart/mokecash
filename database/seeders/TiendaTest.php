@@ -69,8 +69,18 @@ class TiendaTest extends Seeder
 
         // Crear productos de ejemplo para cada tienda
         $productos = [
-            ['nombre' => 'Laptop XPTO', 'descripcion' => 'Laptop de prueba', 'precio' => 1999.99],
-            ['nombre' => 'Mouse Pro', 'descripcion' => 'Mouse ergonómico', 'precio' => 49.90],
+            ['nombre' => 'Auriculares Nova', 'descripcion' => 'Auriculares inalámbricos con cancelación de ruido', 'precio' => 1999.99],
+            ['nombre' => 'Teclado Zen', 'descripcion' => 'Teclado mecánico retroiluminado', 'precio' => 49.90],
+            ['nombre' => 'Tablet Orion', 'descripcion' => 'Tablet de alto rendimiento para estudio', 'precio' => 1999.99],
+            ['nombre' => 'Cámara Veloz', 'descripcion' => 'Cámara web HD para videollamadas', 'precio' => 49.90],
+            ['nombre' => 'Monitor Eclipse', 'descripcion' => 'Monitor 4K ultrapanorámico', 'precio' => 1999.99],
+            ['nombre' => 'Router Blazer', 'descripcion' => 'Router WiFi 6 de largo alcance', 'precio' => 49.90],
+            ['nombre' => 'Laptop Solaris', 'descripcion' => 'Laptop para diseño gráfico', 'precio' => 1999.99],
+            ['nombre' => 'Impresora JetPro', 'descripcion' => 'Impresora láser compacta', 'precio' => 49.90],
+            ['nombre' => 'PC Titan', 'descripcion' => 'Computadora de escritorio para gaming', 'precio' => 1999.99],
+            ['nombre' => 'Smartwatch Pulse', 'descripcion' => 'Reloj inteligente con sensor cardíaco', 'precio' => 49.90],
+            ['nombre' => 'Laptop Zenith', 'descripcion' => 'Laptop ultradelgada de alto rendimiento', 'precio' => 1999.99],
+            ['nombre' => 'Mouse Stream', 'descripcion' => 'Mouse óptico de alta precisión', 'precio' => 49.90],
         ];
 
         foreach ([$tiendaMoke, $tiendaAjipijay] as $tienda) {

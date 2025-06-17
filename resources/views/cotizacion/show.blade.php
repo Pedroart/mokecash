@@ -31,10 +31,6 @@
                             {{ $cotizacion->vendedor_id }}
                         </div>
                         <div class="form-group mb-2 mb20">
-                            <strong>Producto Id:</strong>
-                            {{ $cotizacion->producto_id }}
-                        </div>
-                        <div class="form-group mb-2 mb20">
                             <strong>Dni Cliente:</strong>
                             {{ $cotizacion->dni_cliente }}
                         </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cotizacion;
 use App\Models\ArchivadorProceso;
+use App\Models\CotizacionProducto;
 use App\Http\Requests\CotizacionRequest;
 use App\Http\Requests\StoreEvidenciaRequest;
 use App\Traits\UserContextTrait;
@@ -38,7 +39,7 @@ class CotizacionController extends Controller
         return view('cotizacion.index', compact('cotizacions'));
     }
 
-    public function avanzar($id)
+    public function etapaAvanzar($id)
     {
         $cotizacion = Cotizacion::with('etapaProceso')->findOrFail($id);
 
@@ -48,6 +49,19 @@ class CotizacionController extends Controller
 
         return back()->with('error', 'No se pudo avanzar de etapa.');
     }
+
+    public function etapaActual($id)
+    {
+        $cotizacion = Cotizacion::with('etapaProceso')->findOrFail($id);
+
+        $etapa = $cotizacion->etapaProceso->estado ?? 'ingreso';
+
+        return response()->json([
+            'success' => true,
+            'etapa_actual' => $etapa
+        ]);
+    }
+
 
 
     /**
@@ -68,11 +82,22 @@ class CotizacionController extends Controller
      */
     public function store(CotizacionRequest $request)
     {
-        $cotizacion = Cotizacion::create($request->validated());
+        $validated = $request->validated();
+        $cotizacion = Cotizacion::create($validated);
         
         $cotizacion->etapaProceso()->create([
             'estado' => 'ingreso',
         ]);
+
+        $productos = json_decode($validated['productos_json'], true);
+        foreach ($productos as $producto) {
+            CotizacionProducto::create([
+                'cotizacion_id'   => $cotizacion->id,
+                'producto_id'     => $producto['id'],
+                'imei'            => '-'
+            ]);
+        }
+
 
         return redirect()->route('cotizacions.show', $cotizacion->id)
         ->with('success', 'Cotización creada correctamente.');
@@ -86,11 +111,15 @@ class CotizacionController extends Controller
             carpeta: $request->input('carpeta', 'uploads')
         );
 
-        ArchivadorProceso::create([
+        ArchivadorProceso::updateOrCreate(
+            [
             'cotizacion_id' => $request->cotizacion_id,
             'clave' => $request->clave,
+            ],
+            [
             'valor' => $archivo->id,
-        ]);
+            ]
+        );
 
         return response()->json($archivo, 201);
     }
@@ -104,7 +133,7 @@ class CotizacionController extends Controller
         $cotizacion = Cotizacion::find($id);
         
         $role = $this->getUserRole();
-        $rolesPermitidos = ['admin', 'validador', 'finanzas', 'promotor','admin_tienda'];
+        $rolesPermitidos = ['admin', 'validador', 'finanzas', 'promotor'];
         $vista_accion = in_array($role, $rolesPermitidos);
 
         return view('consulta-financiamiento.show', compact('cotizacion','vista_accion'));

@@ -560,6 +560,16 @@ return [
                 ],
             ],
         ],
+        'Alpinejs' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '//cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js',
+                ],
+            ],
+        ],
     ],
 
     /*

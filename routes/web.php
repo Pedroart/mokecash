@@ -12,6 +12,7 @@ use App\Http\Controllers\CalidaTokenController;
 use App\Http\Controllers\BoletaController;
 use App\Http\Controllers\ArchivadorProcesoController;
 use App\Http\Controllers\ArchivoController;
+use App\Http\Controllers\CotizacionProductoController;
 use App\Models\Archivo;
 
 /*
@@ -39,7 +40,11 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('personaltiendas', PersonaltiendaController::class);
     Route::resource('productos', ProductoController::class);
     Route::resource('cotizacions', CotizacionController::class);
-    Route::get('/cotizacion/{id}/avanzar-etapa', [CotizacionController::class, 'avanzar']);
+    Route::get('/cotizacion/{id}/avanzar-etapa', [CotizacionController::class, 'etapaAvanzar']);
+    Route::get('/cotizacion/{id}/etapa', [CotizacionController::class, 'etapaActual']);
+
+    Route::put('/cotizacion-producto/{id}/imei', [CotizacionProductoController::class, 'actualizarImei']);
+
 
     Route::resource('calida-credentials', CalidaCredentialController::class);
     Route::resource('calida-tokens', CalidaTokenController::class);

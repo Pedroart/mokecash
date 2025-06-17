@@ -37,15 +37,15 @@ class Cotizacion extends Model
      *
      * @var array
      */
-    protected $fillable = ['tienda_id', 'vendedor_id', 'producto_id', 'dni_cliente', 'nombre_cliente', 'direccion', 'cuotas', 'monto', 'monto_financiado', 'estatus', 'ip_origen'];
+    protected $fillable = ['tienda_id', 'vendedor_id', 'dni_cliente', 'nombre_cliente', 'direccion', 'cuotas', 'monto', 'monto_financiado', 'estatus', 'ip_origen'];
 
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function producto()
+    public function productos()
     {
-        return $this->belongsTo(\App\Models\Producto::class, 'producto_id', 'id');
+        return $this->hasMany(\App\Models\CotizacionProducto::class);
     }
     
     /**
@@ -80,11 +80,6 @@ class Cotizacion extends Model
         return $this->items->firstWhere('clave', 'telefono')?->valor;
     }
 
-
-    public function imei(): ?string
-    {
-        return $this->items->firstWhere('clave', 'imei')?->valor;
-    }
 
     public function boleta(): ?string
     {

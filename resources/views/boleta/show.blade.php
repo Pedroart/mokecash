@@ -60,7 +60,7 @@
                         <td>{{ $item->descripcion }}</td>
                         <td>{{ $item->sku }}</td>
                         <td>{{ $item->unidad_de_medida }}</td>
-                        <td>S/ {{ number_format($item->valor_unitario, 2) }}</td>
+                        <td>S/ {{ number_format($item->precio_unitario_con_igv, 2) }}</td>
                         <td>S/ {{ number_format($item->total_item, 2) }}</td>
                     </tr>
                     @endforeach

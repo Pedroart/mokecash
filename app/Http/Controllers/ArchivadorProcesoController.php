@@ -43,7 +43,17 @@ class ArchivadorProcesoController extends Controller
 
     public function store2(ArchivadorProcesoRequest $request)
     {
-        $registro = ArchivadorProceso::create($request->validated());
+        $validated = $request->validated();
+
+        $registro = ArchivadorProceso::updateOrCreate(
+            [
+                'cotizacion_id' => $validated['cotizacion_id'],
+                'clave'         => $validated['clave'],
+            ],
+            [
+                'valor' => $validated['valor']
+            ]
+        );
 
         return response()->json(['success' => true, 'data' => $registro]);
     }
