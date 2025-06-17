@@ -423,6 +423,12 @@ return [
             'can'  => 'productos.index',
         ],
         [
+            'text' => 'Financiamiento',
+            'url'  => 'cotizacions/create',
+            'icon' => 'fas fa-fw fa-hand-holding-usd',
+            'can'  => 'cotizacions.create',
+        ],
+        [
             'text' => 'Cotizaciones',
             'url'  => 'cotizacions',
             'icon' => 'fas fa-fw fa-file-invoice-dollar',
