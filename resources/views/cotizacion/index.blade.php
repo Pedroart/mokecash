@@ -65,7 +65,7 @@
 											<td>{{ $cotizacion->direccion }}</td>
 											<td>{{ $cotizacion->cuotas }}</td>
 											<td>{{ $cotizacion->monto }}</td>
-											<td>{{ $cotizacion->monto_financiado }}</td>
+											<!--<td>{{ $cotizacion->monto_financiado }}</td>-->
 											<td>{{ $cotizacion->estatus }}</td>
 											<td>{{ $cotizacion->ip_origen }}</td>
 
