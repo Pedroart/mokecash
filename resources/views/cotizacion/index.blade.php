@@ -46,7 +46,7 @@
 										<th>Direccion</th>
 										<th>Cuotas</th>
 										<th>Monto</th>
-										<th>Monto Financiado</th>
+										<!--<th>Monto Financiado</th>-->
 										<th>Estatus</th>
 										<th>Ip Origen</th>
 
