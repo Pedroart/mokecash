@@ -59,7 +59,7 @@
                                             <td>{{ $cotizacion->id }}</td>
                                             
 											<td>{{ $cotizacion->tienda->nombre }}</td>
-											<td>{{ $cotizacion->vendedor->name }}</td>
+											<td>{{ $cotizacion->vendedor_id }}</td>
 											<td>{{ $cotizacion->dni_cliente }}</td>
 											<td>{{ $cotizacion->nombre_cliente }}</td>
 											<td>{{ $cotizacion->direccion }}</td>
