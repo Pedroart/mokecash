@@ -1,7 +1,6 @@
 <h4 class="text-center">Etapa 4: Emisión y Subida de la Factura a nombre de MOKE SAC</h4>
 <div class="text-center p-4 my-3 bg-light rounded border">
-    <p>Emite una Factura a nombre de <strong>MOKE SAC</strong> y súbela al sistema para concluir el proceso de financiamiento.</p>
-
+    <p>Emite una factura a nombre de <strong>MOKE SAC</strong>, con RUC <strong>20613765175</strong>, y súbela al sistema para concluir el proceso de financiamiento.</p>
 
     <div class="table-responsive" x-data>
         <table class="table table-bordered align-middle">

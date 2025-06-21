@@ -130,7 +130,7 @@ function guardarDato(clave, valor) {
             const data = JSON.parse(text);
             if (data?.success) {
                 alert('Dato guardado correctamente');
-                //location.reload();
+                location.reload();
             } else {
                 console.error('⚠️ Respuesta inesperada:', data);
                 alert('Error al guardar');
