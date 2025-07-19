@@ -32,7 +32,7 @@ class CotizacionRequest extends FormRequest
 			'monto_financiado' => 'required',
 			'estatus' => 'required',
 			'ip_origen' => 'string',
-            'productos_json'=>'required|json',
+            'productos_json'=>'nullable|json',
         ];
     }
 }

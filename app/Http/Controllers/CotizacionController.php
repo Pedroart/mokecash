@@ -10,7 +10,7 @@ use App\Http\Requests\StoreEvidenciaRequest;
 use App\Traits\UserContextTrait;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\HandlesFileUploads;
-
+use Illuminate\Http\Request;
 
 /**
  * Class CotizacionController
@@ -31,13 +31,17 @@ class CotizacionController extends Controller
         $rolesPermitidos = ['admin', 'validador', 'finanzas', 'promotor'];
 
         if (in_array($role, $rolesPermitidos)) {
-            $cotizacions = Cotizacion::all();
+            $cotizacions = Cotizacion::orderBy('id', 'desc')->get(); // últimos primero
         } else {
             $tienda = $this->getUserTienda()->id;
-            $cotizacions = Cotizacion::where('tienda_id',$tienda)->get();
+            $cotizacions = Cotizacion::where('tienda_id', $tienda)
+                                    ->orderBy('id', 'desc') // también ordenado
+                                    ->get();
         }
+        
         return view('cotizacion.index', compact('cotizacions'));
     }
+
 
     public function etapaAvanzar($id)
     {
@@ -72,7 +76,7 @@ class CotizacionController extends Controller
         //$cotizacion = new Cotizacion();
 
         $vendor_id = Auth::user()->id;
-        $tienda_id = $this->getUserTienda()?->id ?? 0;
+        $tienda_id = $this->getUserTienda()?->id ?? 1;
 
         return view('consulta-financiamiento.index', compact('vendor_id','tienda_id'));
     }

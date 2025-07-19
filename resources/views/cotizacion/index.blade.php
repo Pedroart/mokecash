@@ -38,17 +38,18 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
+                                        <th>Fecha</th>
                                         
-										<th>Tienda Id</th>
-										<th>Vendedor Id</th>
+										<th>Tienda</th>
+										<th>Vendedor</th>
 										<th>Dni Cliente</th>
 										<th>Nombre Cliente</th>
-										<th>Direccion</th>
+										
 										<th>Cuotas</th>
 										<th>Monto</th>
 										<!--<th>Monto Financiado</th>-->
 										<th>Estatus</th>
-										<th>Ip Origen</th>
+										
 
                                         <th></th>
                                     </tr>
@@ -57,17 +58,18 @@
                                     @foreach ($cotizacions as $cotizacion)
                                         <tr>
                                             <td>{{ $cotizacion->id }}</td>
-                                            
+                                            <td>{{ $cotizacion->created_at->format('d/m H:i') }}</td>
+
 											<td>{{ $cotizacion->tienda->nombre }}</td>
 											<td>{{ $cotizacion->vendedor_id }}</td>
 											<td>{{ $cotizacion->dni_cliente }}</td>
 											<td>{{ $cotizacion->nombre_cliente }}</td>
-											<td>{{ $cotizacion->direccion }}</td>
+											
 											<td>{{ $cotizacion->cuotas }}</td>
 											<td>{{ $cotizacion->monto }}</td>
 											<!--<td>{{ $cotizacion->monto_financiado }}</td>-->
 											<td>{{ $cotizacion->estatus }}</td>
-											<td>{{ $cotizacion->ip_origen }}</td>
+											
 
                                             <td>
                                                 <form action="{{ route('cotizacions.destroy',$cotizacion->id) }}" method="POST">

@@ -19,6 +19,7 @@
                         <form method="POST" action="{{ route('cotizacions.update', $cotizacion->id) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
+                            
 
                             @include('cotizacion.form')
 
