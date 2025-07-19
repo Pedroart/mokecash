@@ -181,6 +181,8 @@ class BoletaController extends Controller
         ]);
     }
 
+    
+
     private function numeroALetras($numero){
         $entero = floor($numero);
         $decimales = round(($numero - $entero) * 100);

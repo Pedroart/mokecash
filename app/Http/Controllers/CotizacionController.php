@@ -72,7 +72,7 @@ class CotizacionController extends Controller
         //$cotizacion = new Cotizacion();
 
         $vendor_id = Auth::user()->id;
-        $tienda_id = $this->getUserTienda()->id;
+        $tienda_id = $this->getUserTienda()?->id ?? 0;
 
         return view('consulta-financiamiento.index', compact('vendor_id','tienda_id'));
     }
