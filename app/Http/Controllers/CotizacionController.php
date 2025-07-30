@@ -27,18 +27,20 @@ class CotizacionController extends Controller
     public function index()
     {
         $role = $this->getUserRole();
-        
         $rolesPermitidos = ['admin', 'validador', 'finanzas', 'promotor'];
 
         if (in_array($role, $rolesPermitidos)) {
-            $cotizacions = Cotizacion::orderBy('id', 'desc')->get(); // últimos primero
+            $cotizacions = Cotizacion::where('estatus', '!=', 'anulado')
+                                    ->orderBy('id', 'asc') // primeros primero
+                                    ->get();
         } else {
             $tienda = $this->getUserTienda()->id;
             $cotizacions = Cotizacion::where('tienda_id', $tienda)
-                                    ->orderBy('id', 'desc') // también ordenado
+                                    ->where('estatus', '!=', 'anulado')
+                                    ->orderBy('id', 'asc') // primeros primero
                                     ->get();
         }
-        
+
         return view('cotizacion.index', compact('cotizacions'));
     }
 
