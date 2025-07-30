@@ -37,6 +37,7 @@ class CotizacionController extends Controller
             $tienda = $this->getUserTienda()->id;
             $cotizacions = Cotizacion::where('tienda_id', $tienda)
                                     ->where('estatus', '!=', 'anulado')
+                                    ->where('created_at', '>=', now()->subDays(7))
                                     ->orderBy('id', 'asc') // primeros primero
                                     ->get();
         }
