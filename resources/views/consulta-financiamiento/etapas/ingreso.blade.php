@@ -117,7 +117,7 @@
             @foreach($cotizacion->productos as $index => $cp)
                 <tr x-data="{ editando: false, imei: '{{ $cp->imei }}' }">
                     <td>{{ $cp->producto->nombre ?? 'Producto ID: ' . $cp->producto_id }}</td>
-                    <td class="text-end">S/ {{ number_format($cp->producto->precio ?? 0, 2) }}</td>
+                    <td class="text-end">S/ {{ number_format($cp->precio ?? 0, 2) }}</td>
                     <td>
                         {{-- Si hay IMEI, mostrar campo con botón editar --}}
                         @if($cp->imei)

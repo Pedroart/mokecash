@@ -42,7 +42,7 @@
 										<th>Tienda Id</th>
 										<th>Nombre</th>
 										<th>Descripcion</th>
-										<th>Precio</th>
+										<th>Precio con IGV</th>
 
                                         <th></th>
                                     </tr>

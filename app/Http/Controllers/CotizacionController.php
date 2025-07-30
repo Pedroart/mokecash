@@ -98,7 +98,9 @@ class CotizacionController extends Controller
             CotizacionProducto::create([
                 'cotizacion_id'   => $cotizacion->id,
                 'producto_id'     => $producto['id'],
+                'precio'     => $producto['precio'],
                 'imei'            => '-'
+
             ]);
         }
 
