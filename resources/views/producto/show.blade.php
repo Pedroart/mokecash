@@ -35,7 +35,7 @@
                             {{ $producto->descripcion }}
                         </div>
                         <div class="form-group mb-2 mb20">
-                            <strong>Precio:</strong>
+                            <strong>Precio con IGV:</strong>
                             {{ $producto->precio }}
                         </div>
 

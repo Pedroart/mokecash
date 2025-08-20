@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('cotizacion_id')->constrained()->onDelete('cascade');
             $table->foreignId('producto_id')->constrained()->onDelete('cascade');
+            $table->decimal('precio', 10, 2);
             $table->string('imei');
             $table->timestamps();
         });

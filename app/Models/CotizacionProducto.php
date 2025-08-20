@@ -28,7 +28,7 @@ class CotizacionProducto extends Model
      *
      * @var array
      */
-    protected $fillable = ['cotizacion_id', 'producto_id', 'imei'];
+    protected $fillable = ['cotizacion_id', 'producto_id', 'imei','precio'];
 
 
     /**

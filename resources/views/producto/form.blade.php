@@ -23,7 +23,7 @@
         </div>
         
         <div class="form-group mb-2 mb20">
-            <label for="precio" class="form-label">{{ __('Precio') }}</label>
+            <label for="precio" class="form-label">{{ __('Precio con IGV') }}</label>
             <input type="text" name="precio" class="form-control @error('precio') is-invalid @enderror" value="{{ old('precio', $producto?->precio) }}" id="precio" placeholder="Precio">
             {!! $errors->first('precio', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>

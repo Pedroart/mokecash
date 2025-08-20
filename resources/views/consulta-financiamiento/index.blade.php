@@ -106,14 +106,14 @@
                 <div class="card-header">
                     <h3 class="card-title"><i class="fas fa-chart-bar"></i> Detalles de Financiamiento</h3>
                 </div>
-                <div class="card-body d-flex flex-column justify-content-between">
+                <div class="card-body d-flex flex-column justify-content-start">
                     <div>
                         <div id="detalle-cliente" class="text-muted mb-2">Cliente: ---<br>DNI: ---</div>
                         <div id="detalle-producto" class="font-weight-bold mb-2">Línea Aprobada: ---</div>
                         <h6 class="mt-3">🛒 Productos Seleccionados:</h6>
                         <ul class="list-unstyled mb-3" id="producto-seleccionado">
                         </ul>
-                        
+                        <div id="monto-pagoefectivo" class="font-weight-bold mb-2">Monto en Efectivo: ---</div>
                         <table class="table table-sm table-hover text-center align-middle">
                             <thead class="thead-light">
                                 <tr>
@@ -160,9 +160,12 @@
 
 let tienda_id= {{ $tienda_id }};
 let tablaProductos;
+let monto_en_efectivo = 0;
 let clienteSeleccionado = null;
 let productoSeleccionado = [];
-let margen = 1.3
+let margen = 1.35
+let numero_coutas = 60
+let montoseguro = 0.0015 * numero_coutas
 
 $(document).ready(function () {
     // Inicializar DataTable
@@ -219,7 +222,7 @@ function consultarCliente() {
             clienteSeleccionado = {
                 dni: cliente.numeroDocumento,
                 nombre: cliente.nombre,
-                linea_aprobada: parseFloat(cliente.lineaCredito),
+                linea_aprobada: parseFloat(cliente.lineaCredito*(1-montoseguro)/margen),
                 direcciones: direcciones
             };
 
@@ -312,8 +315,8 @@ function seleccionarProducto(botonDOM, id, nombre, precio) {
 
 
     if (totalNuevo > clienteSeleccionado.linea_aprobada) {
-        alert('La suma total supera la línea de crédito aprobada.');
-        return;
+        alert('El monto total supera el límite de crédito disponible. El excedente deberá ser cubierto en efectivo.');
+        monto_en_efectivo = totalNuevo - clienteSeleccionado.linea_aprobada;
     }
 
     productoSeleccionado.push({ id, nombre, precio });
@@ -343,8 +346,10 @@ function actualizarResumenSeleccionados() {
         ${html}
     `;
 
-    const totalActual = productoSeleccionado.reduce((sum, p) => sum + p.precio, 0);
+    const totalActual = productoSeleccionado.reduce((sum, p) => sum + p.precio, 0) - monto_en_efectivo;
     actualizarCuotas(totalActual);
+    document.getElementById('monto-pagoefectivo').innerText =
+                `Monto en Efectivo: S/ ${monto_en_efectivo.toFixed(2)}`;
 }
 
 function deseleccionarProductoPorId(id) {
@@ -352,6 +357,14 @@ function deseleccionarProductoPorId(id) {
     
     const seleccionadoproducto = productoSeleccionado.findLastIndex(p => p.id !== id);
     productoSeleccionado.pop(seleccionadoproducto);
+
+    const totalNuevo = productoSeleccionado.reduce((sum, p) => sum + p.precio, 0);
+    if (totalNuevo > clienteSeleccionado.linea_aprobada) {
+        monto_en_efectivo = totalNuevo - clienteSeleccionado.linea_aprobada;
+    }
+    else{ 
+        monto_en_efectivo = 0;
+    }
     // Actualizar el resumen visual
     actualizarResumenSeleccionados();
 }
@@ -362,21 +375,38 @@ async function mostrarFormulario() {
         alert('Debe seleccionar un cliente y un producto antes de continuar.');
         return;
     }
+
     const ip = await obtenerIP();
 
-    // Setear valores en inputs ocultos
-    const monto = productoSeleccionado.reduce((sum, p) => sum + p.precio, 0);
+    // 1. Calcular el monto total original
+    const montoTotal = productoSeleccionado.reduce((sum, p) => sum + p.precio, 0);
 
+    // 2. Calcular monto financiado restando efectivo
+    const montoFinanciado = montoTotal * margen - monto_en_efectivo;
+
+    // 3. Aplicar descuento proporcional al efectivo
+    const descuentoProporcional = monto_en_efectivo / montoTotal;
+
+    // 4. Aplicar nuevo precio con descuento a cada producto
+    const productosConDescuento = productoSeleccionado.map(p => {
+        const descuento = p.precio * descuentoProporcional;
+        const nuevoPrecio = p.precio - descuento;
+        return { ...p, precio: parseFloat(nuevoPrecio.toFixed(2)) };
+    });
+
+    // 5. Setear valores en el formulario
     document.getElementById('input-dni').value = clienteSeleccionado.dni;
     document.getElementById('input-nombre').value = clienteSeleccionado.nombre;
-    document.getElementById('input-producto').value = productoSeleccionado.id;
-    document.getElementById('input-precio').value = monto;
-    document.getElementById('input-financiado').value = monto*margen;
+    document.getElementById('input-producto').value = productosConDescuento.map(p => p.id).join(',');
+    document.getElementById('input-precio').value = productosConDescuento.reduce((sum, p) => sum + p.precio, 0).toFixed(2);
+    document.getElementById('input-financiado').value = montoFinanciado.toFixed(2);
     document.getElementById('input-ip').value = ip;
-    document.getElementById('input-productos-json').value = JSON.stringify(productoSeleccionado);
+    document.getElementById('input-productos-json').value = JSON.stringify(productosConDescuento);
+    console.log(JSON.stringify(productosConDescuento));
 
+    // 6. Cargar direcciones
     const selectDireccion = document.getElementById('input-direccion');
-    selectDireccion.innerHTML = '<option value="">-- Seleccione --</option>'; // limpiar
+    selectDireccion.innerHTML = '<option value="">-- Seleccione --</option>';
     clienteSeleccionado.direcciones.forEach(dir => {
         const opt = document.createElement('option');
         opt.value = dir;
@@ -384,10 +414,10 @@ async function mostrarFormulario() {
         selectDireccion.appendChild(opt);
     });
 
-
-    // Mostrar modal
+    // 7. Mostrar modal
     $('#modalGuardarProceso').modal('show');
 }
+
 
 async function obtenerIP() {
     try {

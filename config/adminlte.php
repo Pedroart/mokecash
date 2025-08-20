@@ -576,6 +576,21 @@ return [
                 ],
             ],
         ],
+        'jKanban' => [
+            'active' => true,
+            'files' => [
+                [
+                'type'     => 'css',
+                'asset'    => false,
+                'location' => '//cdn.jsdelivr.net/npm/jkanban@1.3.1/dist/jkanban.min.css',
+                ],
+                [
+                'type'     => 'js',
+                'asset'    => false,
+                'location' => '//cdn.jsdelivr.net/npm/jkanban@1.3.1/dist/jkanban.min.js',
+                ],
+            ],
+        ],
     ],
 
     /*
