@@ -6,7 +6,7 @@ php artisan migrate:fresh --seed
 
 config/crud.php
 
-
+php artisan make:mode <name_of_migration> -m
 php artisan make:crud banks
 
 > Para implementar
