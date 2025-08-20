@@ -446,7 +446,12 @@ return [
             'icon' => 'fas fa-fw fa-shield-alt',
             'can'  => 'calida-tokens.index',
         ],
-
+        [
+            'text' => 'Selecciones Usuarios',
+            'url'  => 'selecciones-usuarios',
+            'icon' => 'fas fa-fw fa-receipt',
+            'can'  => 'selecciones-usuarios.index',
+        ],
         ['header' => 'CUENTA'],
         [
             'text' => 'Perfil',

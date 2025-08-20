@@ -13,6 +13,7 @@ use App\Http\Controllers\BoletaController;
 use App\Http\Controllers\ArchivadorProcesoController;
 use App\Http\Controllers\ArchivoController;
 use App\Http\Controllers\CotizacionProductoController;
+use App\Http\Controllers\SeleccionesUsuarioController;
 use App\Models\Archivo;
 
 /*
@@ -50,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('calida-tokens', CalidaTokenController::class);
     Route::resource('boletas', BoletaController::class);
     Route::resource('archivos', ArchivoController::class);
+    Route::resource('selecciones-usuarios', SeleccionesUsuarioController::class);
 
     Route::resource('archivador-procesos', ArchivadorProcesoController::class);
 

@@ -8,6 +8,7 @@
 
 @section('content')
 
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <!-- Modal de Confirmación -->
 <div class="modal fade" id="modalGuardarProceso" tabindex="-1" role="dialog" aria-labelledby="guardarProcesoLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -320,6 +321,7 @@ function seleccionarProducto(botonDOM, id, nombre, precio) {
     }
 
     productoSeleccionado.push({ id, nombre, precio });
+    guardarSelecionUsuario(id,precio);
     actualizarResumenSeleccionados();
 }
 
@@ -464,6 +466,39 @@ function calcularTotalFinanciado(monto, tasaSeguro = 0, cuotas = 0, incluirSegur
     return redondear2Decimales(monto + seguroTotal);
 }
 
+function guardarSelecionUsuario(producto_id,precio){
+    // Obtener el token CSRF desde el meta
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    // Los datos que quieres enviar
+    const data = {
+        tienda_id: tienda_id,
+        vendedor_id: {{auth()->id()}},
+        dni_cliente: clienteSeleccionado.dni,
+        nombre_cliente: clienteSeleccionado.nombre,
+        linea_credito: clienteSeleccionado.linea_aprobada,
+        producto_id: producto_id,
+        precio: precio
+    };
+
+    // Enviar el POST con fetch
+    fetch('/api/seleccion-usuario', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log("Respuesta:", result);
+    })
+    .catch(error => {
+        console.error("Error:", error);
+    });
+
+}
 
 </script>
 @endpush

@@ -77,6 +77,15 @@ class RolesAndPermissionsSeeder extends Seeder
             'calida-tokens.edit'    => ['admin'],
             'calida-tokens.destroy' => ['admin'],
             'calida-tokens.show'    => ['admin'],
+            
+            //selecciones-usuarios 
+            'selecciones-usuarios.index'   => ['admin'],
+            'selecciones-usuarios.create'  => ['admin'],
+            'selecciones-usuarios.edit'    => ['admin'],
+            'selecciones-usuarios.destroy' => ['admin'],
+            'selecciones-usuarios.show'    => ['admin'],
+
+
         ];
 
         foreach ($permisos as $permiso => $roles) {

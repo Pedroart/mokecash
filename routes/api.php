@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CotizacionController;
 use App\Http\Controllers\ArchivadorProcesoController;
 use App\Http\Controllers\BoletaController;
+use App\Http\Controllers\SeleccionesUsuarioController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,6 +24,7 @@ Route::get('/tiendas/{tiendaId}/productos', [ProductoController::class, 'product
 Route::post('/archivador-procesos', [ArchivadorProcesoController::class, 'store2']);
 Route::post('/boletas', [BoletaController::class, 'generar']);
 Route::post('/evidencias', [CotizacionController::class, 'storeArchivo']);
+Route::post('/seleccion-usuario', [SeleccionesUsuarioController::class, 'storeApi']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
