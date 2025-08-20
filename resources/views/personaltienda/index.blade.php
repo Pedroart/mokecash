@@ -50,8 +50,8 @@
                                         <tr>
                                             <td>{{ $personaltienda->id }}</td>
                                             
-											<td>{{ $personaltienda->user_id }}</td>
-											<td>{{ $personaltienda->tienda_id }}</td>
+											<td>{{ $personaltienda->user->name }}</td>
+											<td>{{ $personaltienda->tienda->nombre }}</td>
 
                                             <td>
                                                 <form action="{{ route('personaltiendas.destroy',$personaltienda->id) }}" method="POST">
